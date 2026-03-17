@@ -8,7 +8,6 @@
         :root { --primary: #2d3436; --secondary: #0984e3; --bg: #f8f9fa; --text: #2d3436; --accent: #00b894; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
         
-        /* Brand Header */
         .brand-header { text-align: center; margin-bottom: 25px; }
         .logo-img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 10px; }
         h1 { color: var(--primary); margin: 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 1.7rem; }
@@ -21,14 +20,13 @@
         .btn-print { background: var(--accent); }
         .hidden { display: none !important; }
         
-        /* Profile Layout */
         #dogNameHeader { margin: 15px 0; color: var(--primary); font-size: 1.6rem; text-align: center; }
         #photoDisplay { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; background: #eee; margin: 0 auto; display: block; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .item { background: #f1f2f6; padding: 10px; border-radius: 6px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .journal-entry { border-left: 5px solid var(--secondary); padding: 10px; margin-bottom: 15px; background: #fff; border: 1px solid #eee; }
 
         @media print {
-            button, input, textarea, select, .file-label, .del, #loginBox, #publicArea, .nav-buttons, #publicQuestions { display: none !important; }
+            button, input, textarea, select, .file-label, .del, .admin-only, #loginBox, #publicArea, .nav-buttons { display: none !important; }
             .card { box-shadow: none; border: 1px solid #eee; page-break-inside: avoid; }
             .hidden { display: block !important; }
         }
@@ -37,7 +35,7 @@
 <body>
 
     <header class="brand-header">
-        <img src="INSERT_YOUR_LOGO_URL_HERE" alt="Logo" class="logo-img" onerror="this.src='https://img.icons8.com/ios-filled/100/2d3436/german-shepherd.png'">
+        <img src="https://img.icons8.com/ios-filled/100/2d3436/german-shepherd.png" alt="Logo" class="logo-img" onerror="this.src='https://img.icons8.com/ios-filled/100/2d3436/german-shepherd.png'">
         <h1>All Dog Obedience</h1>
         <div class="slogan">"Where no dog is left behind"</div>
     </header>
@@ -45,20 +43,21 @@
     <div id="publicArea">
         <div class="card">
             <h2>Welcome!</h2>
-            <p>I help dogs and their humans thrive. If you are a current client, log in below to manage your dog's training profile.</p>
+            <p>I help dogs and their humans thrive. Current clients, please log in below to view your dog's training profile.</p>
         </div>
 
-        <div class="card" id="publicQuestions">
-            <h2>🙋 Ask a Training Question</h2>
-            <input type="email" placeholder="Your Email Address">
-            <textarea placeholder="How can I help with your dog today?"></textarea>
-            <button onclick="alert('Message sent! I will get back to you soon.')" style="background: var(--primary);">Send to Trainer</button>
+        <div class="card">
+            <h2>🙋 Training Question?</h2>
+            <input type="email" placeholder="Email Address">
+            <textarea placeholder="How can I help?"></textarea>
+            <button onclick="alert('Sent!')" style="background: var(--primary);">Send Question</button>
         </div>
 
         <div class="card" id="loginBox">
-            <h2>🔒 Trainer & Client Login</h2>
+            <h2>🔒 Portal Login</h2>
             <input type="password" id="passInput" placeholder="Enter Password">
-            <button onclick="checkPass()">Open Training Manager</button>
+            <button onclick="checkPass()">Login</button>
+            <p style="font-size:0.7rem; color:#636e72; text-align:center;">Admin: Admin2026 | Client: Client2026</p>
         </div>
     </div>
 
@@ -66,10 +65,14 @@
         <div class="card nav-buttons">
             <h2>Select Dog Profile</h2>
             <select id="dogSelector" onchange="switchDog()"></select>
-            <div style="display:flex; gap:5px;">
-                <input type="text" id="newDogName" placeholder="New Dog Name" style="margin:0;">
-                <button onclick="addNewDog()" style="width:120px; margin:0; background:var(--accent);">+ Add Dog</button>
+            
+            <div class="admin-only hidden">
+                <div style="display:flex; gap:5px;">
+                    <input type="text" id="newDogName" placeholder="New Dog Name" style="margin:0;">
+                    <button onclick="addNewDog()" style="width:120px; margin:0; background:var(--accent);">+ Add Dog</button>
+                </div>
             </div>
+
             <div style="display:flex; justify-content: space-between; margin-top:10px;">
                 <button onclick="logout()" style="width:auto; background:#b2bec3; padding:5px 15px;">Logout</button>
                 <button onclick="window.print()" class="btn-print" style="width:auto; padding:5px 15px;">🖨️ Print Report</button>
@@ -78,61 +81,70 @@
 
         <div class="card">
             <h2 id="dogNameHeader">Dog Name</h2>
-            <img id="photoDisplay" src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z' fill='%23ccc'/%3E%3C/svg%3E">
-            <div style="text-align:center;">
+            <img id="photoDisplay" src="">
+            <div class="admin-only hidden" style="text-align:center;">
                 <label class="file-label" style="color:var(--secondary); cursor:pointer; font-size: 0.8rem;">[ Change Photo ]<input type="file" id="photoInput" accept="image/*" style="display:none"></label>
             </div>
         </div>
 
         <div class="card">
             <h2>🎓 Skills & Commands</h2>
-            <div style="display:flex; gap:10px;">
-                <input type="text" id="newSkill" placeholder="Add a skill..." style="margin:0;">
-                <button onclick="addSkill()" style="width:80px; margin:0;">Add</button>
+            <div class="admin-only hidden">
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="newSkill" placeholder="Add a skill..." style="margin:0;">
+                    <button onclick="addSkill()" style="width:80px; margin:0;">Add</button>
+                </div>
             </div>
             <div id="skillList" style="margin-top:15px;"></div>
         </div>
 
         <div class="card">
             <h2>📖 Training Journal</h2>
-            <textarea id="journalText" placeholder="Session notes..."></textarea>
-            <button onclick="addJournal()">Save Note</button>
+            <div class="admin-only hidden">
+                <textarea id="journalText" placeholder="Session notes..."></textarea>
+                <button onclick="addJournal()">Save Note</button>
+            </div>
             <div id="journalList" style="margin-top:15px;"></div>
         </div>
     </div>
 
     <script>
-        const MASTER_PASS = "Puppy2026";
+        const PASSWORDS = { admin: "Admin2026", client: "Client2026" };
         let dogs = JSON.parse(localStorage.getItem('dogs')) || {}; 
         let currentDog = localStorage.getItem('lastSelectedDog') || "";
+        let userRole = sessionStorage.getItem('userRole') || "";
 
-        window.onload = () => { if(sessionStorage.getItem('isLogged')) showPrivate(); };
+        window.onload = () => { if(userRole) showPrivate(); };
 
         function checkPass() {
-            if(document.getElementById('passInput').value === MASTER_PASS) {
-                sessionStorage.setItem('isLogged', 'true');
-                showPrivate();
-            } else { alert("Incorrect Password"); }
+            const input = document.getElementById('passInput').value;
+            if(input === PASSWORDS.admin) userRole = "admin";
+            else if(input === PASSWORDS.client) userRole = "client";
+            else { alert("Incorrect Password"); return; }
+            
+            sessionStorage.setItem('userRole', userRole);
+            showPrivate();
         }
 
         function showPrivate() {
             document.getElementById('publicArea').classList.add('hidden');
             document.getElementById('privateArea').classList.remove('hidden');
-            updateDogSelector();
-            if(currentDog && dogs[currentDog]) {
-                switchDog(currentDog);
-            } else if (Object.keys(dogs).length > 0) {
-                switchDog(Object.keys(dogs)[0]);
+            
+            // Show/Hide Admin Controls
+            if(userRole === "admin") {
+                document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
             }
+
+            updateDogSelector();
+            if(currentDog && dogs[currentDog]) switchDog(currentDog);
+            else if (Object.keys(dogs).length > 0) switchDog(Object.keys(dogs)[0]);
         }
 
         function addNewDog() {
             const name = document.getElementById('newDogName').value.trim();
             if(!name || dogs[name]) return;
             dogs[name] = { photo: "", skills: [], journal: [] };
-            saveDogs();
-            updateDogSelector();
-            switchDog(name);
+            saveDogs(); updateDogSelector(); switchDog(name);
             document.getElementById('newDogName').value = '';
         }
 
@@ -142,28 +154,26 @@
             localStorage.setItem('lastSelectedDog', currentDog);
             document.getElementById('dogSelector').value = currentDog;
             document.getElementById('dogNameHeader').innerText = currentDog;
-            const data = dogs[currentDog];
-            document.getElementById('photoDisplay').src = data.photo || "data:image/svg+xml,...";
+            document.getElementById('photoDisplay').src = dogs[currentDog].photo || "data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z' fill='%23ccc'/%3E%3C/svg%3E";
             renderSkills(); renderJournal();
         }
 
         function addSkill() {
             const skill = document.getElementById('newSkill').value;
-            if(!skill || !currentDog) return;
+            if(!skill) return;
             dogs[currentDog].skills.push({name: skill, id: Date.now()});
-            saveAndRefresh();
-            document.getElementById('newSkill').value = '';
+            saveAndRefresh(); document.getElementById('newSkill').value = '';
         }
 
         function addJournal() {
             const text = document.getElementById('journalText').value;
-            if(!text || !currentDog) return;
+            if(!text) return;
             dogs[currentDog].journal.unshift({text, date: new Date().toLocaleDateString(), id: Date.now()});
-            saveAndRefresh();
-            document.getElementById('journalText').value = '';
+            saveAndRefresh(); document.getElementById('journalText').value = '';
         }
 
         function deleteItem(type, id) {
+            if(userRole !== 'admin') return;
             dogs[currentDog][type] = dogs[currentDog][type].filter(i => i.id !== id);
             saveAndRefresh();
         }
@@ -180,14 +190,16 @@
         function renderSkills() {
             document.getElementById('skillList').innerHTML = dogs[currentDog].skills.map(s => `
                 <div class="item"><span>✅ ${s.name}</span>
-                <button class="del" onclick="deleteItem('skills', ${s.id})" style="width:auto; background:#ff7675; padding:2px 8px; margin:0;">X</button></div>
+                ${userRole === 'admin' ? `<button onclick="deleteItem('skills', ${s.id})" style="width:auto; background:#ff7675; padding:2px 8px; margin:0;">X</button>` : ''}
+                </div>
             `).join('');
         }
 
         function renderJournal() {
             document.getElementById('journalList').innerHTML = dogs[currentDog].journal.map(j => `
                 <div class="journal-entry"><strong>${j.date}</strong><p>${j.text}</p>
-                <span class="del" onclick="deleteItem('journal', ${j.id})" style="color:#ff7675; cursor:pointer; font-size:0.7rem;">[Delete]</span></div>
+                ${userRole === 'admin' ? `<span onclick="deleteItem('journal', ${j.id})" style="color:#ff7675; cursor:pointer; font-size:0.7rem;">[Delete]</span>` : ''}
+                </div>
             `).join('');
         }
 
@@ -201,7 +213,7 @@
             reader.readAsDataURL(e.target.files[0]);
         };
 
-        function logout() { sessionStorage.removeItem('isLogged'); location.reload(); }
+        function logout() { sessionStorage.removeItem('userRole'); location.reload(); }
     </script>
 </body>
 </html>
