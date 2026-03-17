@@ -16,14 +16,15 @@
         .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         h2 { font-size: 1.1rem; margin-top: 0; color: var(--secondary); border-bottom: 2px solid #eee; padding-bottom: 8px; }
         input, textarea, button, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; font-size: 1rem; }
-        button { background: var(--secondary); color: white; border: none; font-weight: bold; cursor: pointer; }
+        button { background: var(--secondary); color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:active { transform: scale(0.98); }
         .btn-print { background: var(--accent); }
         .hidden { display: none !important; }
         
         #dogNameHeader { margin: 15px 0; color: var(--primary); font-size: 1.6rem; text-align: center; }
         #photoDisplay { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; background: #eee; margin: 0 auto; display: block; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .item { background: #f1f2f6; padding: 10px; border-radius: 6px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .journal-entry { border-left: 5px solid var(--secondary); padding: 10px; margin-bottom: 15px; background: #fff; border: 1px solid #eee; }
+        .journal-entry { border-left: 5px solid var(--secondary); padding: 10px; margin-bottom: 15px; background: #fff; border: 1px solid #eee; border-radius: 4px; }
 
         @media print {
             button, input, textarea, select, .file-label, .del, .admin-only, #loginBox, #publicArea, .nav-buttons { display: none !important; }
@@ -35,7 +36,7 @@
 <body>
 
     <header class="brand-header">
-        <img src="https://img.icons8.com/ios-filled/100/2d3436/german-shepherd.png" alt="Logo" class="logo-img" onerror="this.src='https://img.icons8.com/ios-filled/100/2d3436/german-shepherd.png'">
+        <img src="INSERT_YOUR_LOGO_URL_HERE" alt="Logo" class="logo-img" onerror="this.src='https://img.icons8.com/ios-filled/100/2d3436/german-shepherd.png'">
         <h1>All Dog Obedience</h1>
         <div class="slogan">"Where no dog is left behind"</div>
     </header>
@@ -43,21 +44,20 @@
     <div id="publicArea">
         <div class="card">
             <h2>Welcome!</h2>
-            <p>I help dogs and their humans thrive. Current clients, please log in below to view your dog's training profile.</p>
+            <p>Dedicated to helping dogs and their owners build a better bond. Current clients can log in below.</p>
         </div>
 
         <div class="card">
             <h2>🙋 Training Question?</h2>
             <input type="email" placeholder="Email Address">
-            <textarea placeholder="How can I help?"></textarea>
-            <button onclick="alert('Sent!')" style="background: var(--primary);">Send Question</button>
+            <textarea placeholder="Ask me anything about your dog's behavior..."></textarea>
+            <button onclick="alert('Message sent! I will get back to you shortly.')" style="background: var(--primary);">Send to Trainer</button>
         </div>
 
         <div class="card" id="loginBox">
             <h2>🔒 Portal Login</h2>
-            <input type="password" id="passInput" placeholder="Enter Password">
-            <button onclick="checkPass()">Login</button>
-            <p style="font-size:0.7rem; color:#636e72; text-align:center;">Admin: Admin2026 | Client: Client2026</p>
+            <input type="password" id="passInput" placeholder="Enter Portal Password">
+            <button onclick="checkPass()">Login to Profile</button>
         </div>
     </div>
 
@@ -82,7 +82,7 @@
         <div class="card">
             <h2 id="dogNameHeader">Dog Name</h2>
             <img id="photoDisplay" src="">
-            <div class="admin-only hidden" style="text-align:center;">
+            <div class="admin-only hidden" style="text-align:center; margin-top: 10px;">
                 <label class="file-label" style="color:var(--secondary); cursor:pointer; font-size: 0.8rem;">[ Change Photo ]<input type="file" id="photoInput" accept="image/*" style="display:none"></label>
             </div>
         </div>
@@ -101,7 +101,7 @@
         <div class="card">
             <h2>📖 Training Journal</h2>
             <div class="admin-only hidden">
-                <textarea id="journalText" placeholder="Session notes..."></textarea>
+                <textarea id="journalText" placeholder="Take notes on today's session..."></textarea>
                 <button onclick="addJournal()">Save Note</button>
             </div>
             <div id="journalList" style="margin-top:15px;"></div>
@@ -109,7 +109,9 @@
     </div>
 
     <script>
+        // PASSWORDS - Keep these safe!
         const PASSWORDS = { admin: "Admin2026", client: "Client2026" };
+        
         let dogs = JSON.parse(localStorage.getItem('dogs')) || {}; 
         let currentDog = localStorage.getItem('lastSelectedDog') || "";
         let userRole = sessionStorage.getItem('userRole') || "";
@@ -130,7 +132,6 @@
             document.getElementById('publicArea').classList.add('hidden');
             document.getElementById('privateArea').classList.remove('hidden');
             
-            // Show/Hide Admin Controls
             if(userRole === "admin") {
                 document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
             }
