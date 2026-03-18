@@ -1,3 +1,143 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>All Dog Obedience</title><script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/react@18/umd/react.development.js"></script><script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script><script src="https://unpkg.com/@babel/standalone/babel.min.js"></script><style>body{background-color:#fffaf5;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 100 100'%3E%3Cg fill-opacity='0.2'%3E%3Cpath d='M15 15c2 0 3-1 3-3s-1-3-3-3-3 1-3 3 1 3 3 3zm10-5c2 0 3-1 3-3s-1-3-3-3-3 1-3 3 1 3 3 3zm-5 15c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7z' fill='%23fde6d2'/%3E%3Cpath d='M75 65c2 0 3-1 3-3s-1-3-3-3-3 1-3 3 1 3 3 3zm10-5c2 0 3-1 3-3s-1-3-3-3-3 1-3 3 1 3 3 3zm-5 15c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7z' transform='rotate(25 75 75)' fill='%23fed7aa'/%3E%3Cpath d='M40 85c1 0 2-1 2-2s-1-2-2-2-2 1-2 2 1 2 2 2zm6-3c1 0 2-1 2-2s-1-2-2-2-2 1-2 2 1 2 2 2zm-3 8c-3 0-5 2-5 5s2 5 5 5 5-2 5-5-2-5-5-5z' transform='rotate(-15 40 85)' fill='%23ffedd5'/%3E%3C/g%3E%3C/svg%3E");}@media print{.no-print{display:none!important}body{background:white!important;background-image:none!important}}</style></head><body><div id="root"></div><script type="text/babel">const {useState}=React;function App(){const [v,sV]=useState('public');const [pass,sP]=useState('');const [auth,sA]=useState(false);const [c,sC]=useState([]);const [nC,snC]=useState({n:'',ch:''});const lib=['Place','Heel','Recall','Sit-Stay','Down-Stay','Crate','Door Manners','Leave It','Off'];const checkPass=()=>{if(pass==='TRAINER123'){sV('admin');sA(true);}else if(pass==='CLIENT123'){sV('client');sA(true);}else{alert('Invalid Code');}};const add=()=>{if(nC.n&&nC.ch){sC([...c,{...nC,id:Date.now()}]);snC({n:'',ch:''});}};const GSD=()=>(<svg viewBox="0 0 100 100" class="w-12 h-12 text-orange-600" fill="currentColor"><path d="M48,12 C40,10 30,15 25,25 C20,35 22,55 35,75 C45,90 65,95 80,85 C90,75 95,50 85,35 C75,20 60,15 48,12 Z M55,30 C58,30 60,32 60,35 C60,38 58,40 55,40 C52,40 50,38 50,35 C50,32 52,30 55,30 Z" fill-rule="evenodd" clip-rule="evenodd" d="M46.8,13.2c-2.4-1-6.1-0.2-8.3,1.8c-3.1,2.8-5,8.4-5.1,13.4c-0.1,6.8,2,14.6,5.3,19.3c0.4,0.6,0.5,1.4,0.1,2.1l-2.4,4.2 c-0.5,0.9-0.2,2,0.7,2.5c0.9,0.5,2,0.2,2.5-0.7l2.4-4.2c1.7-2.9,4.8-4.7,8.2-4.7h0.5c3.4,0,6.5,1.8,8.2,4.7l2.4,4.2 c0.5,0.9,1.6,1.2,2.5,0.7c0.9-0.5,1.2-1.6,0.7-2.5l-2.4-4.2c-0.4-0.7-0.3-1.5,0.1-2.1c3.3-4.7,5.4-12.5,5.3-19.3 c-0.1-5-2-10.6-5.1-13.4c-2.2-2-5.9-2.8-8.3-1.8c-2.4,1-3.6,3.6-4.6,3.6S49.2,14.2,46.8,13.2z"/></svg>);return(<div class="min-h-screen p-4 flex flex-col items-center"><header class="text-center mb-6"><div class="w-20 h-20 bg-white rounded-full shadow-md border-2 border-orange-200 flex items-center justify-center mx-auto mb-2 no-print shadow-orange-100"><GSD/></div><h1 class="text-2xl font-black text-orange-600 uppercase tracking-tighter">All Dog Obedience</h1><p class="italic text-gray-700 text-sm font-medium">"Where no dog is left behind"</p><p class="font-bold text-gray-400 text-[10px] mt-1 uppercase tracking-widest no-print">812-483-1632</p>{!auth?(<button onClick={()=>sV('login')} class="mt-4 text-[10px] font-black uppercase text-orange-500 border-b border-orange-500 no-print">Client Login</button>):(<button onClick={()=>{sA(false);sV('public');sP('');}} class="mt-4 text-[10px] font-black uppercase text-gray-400 no-print">Sign Out</button>)}</header><main class="w-full max-w-md bg-white/90 backdrop-blur-md rounded-[2.5rem] shadow-2xl overflow-hidden border border-orange-100"><div class="p-6">{v==='public'?(<div class="no-print text-center py-4"><h2 class="text-lg font-bold mb-2">Have a Question?</h2><p class="text-gray-500 text-xs italic mb-6 font-medium px-4 text-center">I'm currently training! Text me for a quick response about your dog.</p><button onClick={()=>window.location.href=`sms:+18124831632`} class="w-full bg-orange-500 text-white font-black py-4 rounded-2xl uppercase shadow-lg text-sm tracking-tighter active:scale-95 transition-transform">Text Me A Question</button></div>):null}{v==='login'?(<div class="p-6 text-center no-print"><input type="password" class="w-full border-2 border-orange-100 rounded-2xl p-4 text-center text-xl outline-none focus:border-orange-400 mb-4" placeholder="Enter Code" value={pass} onChange={e=>sP(e.target.value.toUpperCase())}/><button onClick={checkPass} class="w-full bg-orange-500 text-white font-black py-4 rounded-2xl uppercase shadow-md">Unlock Training</button></div>):null}{v==='admin'?(<div class="no-print bg-orange-50/50 p-5 rounded-3xl mb-6"><h2 class="font-black text-orange-800 mb-3 text-[10px] uppercase">Session Progress</h2><input list="commands" class="w-full border-0 shadow-sm p-4 rounded-2xl mb-2 text-sm bg-white" placeholder="Pick or Type Command" value={nC.n} onChange={e=>snC({...nC,n:e.target.value})}/><datalist id="commands">{lib.map(l=><option key={l} value={l}/>)}</datalist><textarea class="w-full border-0 shadow-sm p-4 rounded-2xl text-sm bg-white" placeholder="How did they do today?" value={nC.ch} onChange={e=>snC({...nC,ch:e.target.value})}/><button onClick={add} class="w-full bg-green-500 text-white font-black py-4 rounded-2xl mt-3 shadow-lg uppercase text-xs active:scale-95 transition">Add To Summary</button></div>):null}{(v==='client'||v==='admin')&&auth?(<div class="animate-in fade-in duration-500"><div class="flex justify-between items-center mb-6 px-1"><h3 class="font-black text-gray-800 uppercase text-xs">Today's Session</h3><button onClick={()=>window.print()} class="no-print text-[9px] bg-white font-black px-4 py-2 rounded-full border border-orange-200 text-orange-600 shadow-sm uppercase">Print Report</button></div><div class="space-y-4">{c.length>0?c.map(i=>(<div key={i.id} class="p-5 bg-white rounded-3xl border-l-8 border-orange-500 shadow-sm transition hover:shadow-md"><h4 class="font-black text-orange-600 text-xs uppercase mb-1">{i.n}</h4><p class="text-xs text-gray-700 leading-relaxed">{i.ch}</p></div>)):<p class="text-center text-gray-400 text-xs italic py-8">No session notes recorded yet.</p>}</div></div>):null}</div></
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>All Dog Obedience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            background-color: #fffaf5;
+            /* Fixed Paw Print SVG: 4 toes + 1 pad per paw */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 100 100'%3E%3Cg fill='%23fed7aa' fill-opacity='0.3'%3E%3Ccircle cx='40' cy='35' r='5'/%3E%3Ccircle cx='50' cy='30' r='5'/%3E%3Ccircle cx='60' cy='35' r='5'/%3E%3Ccircle cx='70' cy='45' r='5'/%3E%3Cpath d='M45 60 q5-10 10 0 t10 0 q0 10-10 10 t-10-10'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; background-image: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function App() {
+            const [view, setView] = useState('public');
+            const [pass, setPass] = useState('');
+            const [auth, setAuth] = useState(false);
+            const [notes, setNotes] = useState([]);
+            const [newNote, setNewNote] = useState({ n: '', ch: '' });
+
+            const lib = ['Place', 'Heel', 'Recall', 'Sit-Stay', 'Down-Stay', 'Crate', 'Door Manners', 'Leave It', 'Off'];
+
+            const checkPass = () => {
+                const upperPass = pass.toUpperCase();
+                if (upperPass === 'TRAINER123') {
+                    setView('admin');
+                    setAuth(true);
+                } else if (upperPass === 'CLIENT123') {
+                    setView('client');
+                    setAuth(true);
+                } else {
+                    alert('Invalid Code');
+                }
+            };
+
+            const addNote = () => {
+                if (newNote.n && newNote.ch) {
+                    setNotes([...notes, { ...newNote, id: Date.now() }]);
+                    setNewNote({ n: '', ch: '' });
+                }
+            };
+
+            return (
+                <div className="min-h-screen p-4 flex flex-col items-center">
+                    <header className="text-center mb-6">
+                        <div className="w-20 h-20 bg-white rounded-full shadow-md border-2 border-orange-200 flex items-center justify-center mx-auto mb-2 no-print">
+                            <span className="text-4xl">🐕</span>
+                        </div>
+                        <h1 className="text-2xl font-black text-orange-600 uppercase tracking-tighter">All Dog Obedience</h1>
+                        <p className="italic text-gray-700 text-sm font-medium">"Where no dog is left behind"</p>
+                        <p className="font-bold text-gray-400 text-[10px] mt-1 uppercase tracking-widest no-print">812-483-1632</p>
+                        
+                        {!auth ? (
+                            <button onClick={() => setView('login')} className="mt-4 text-[10px] font-black uppercase text-orange-500 border-b border-orange-500 no-print">Client Login</button>
+                        ) : (
+                            <button onClick={() => { setAuth(false); setView('public'); setPass(''); }} className="mt-4 text-[10px] font-black uppercase text-gray-400 no-print">Sign Out</button>
+                        )}
+                    </header>
+
+                    <main className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-[2.5rem] shadow-2xl overflow-hidden border border-orange-100 p-6">
+                        {view === 'public' && (
+                            <div className="text-center py-4">
+                                <h2 className="text-lg font-bold mb-2">Have a Question?</h2>
+                                <p className="text-gray-500 text-xs italic mb-6 font-medium px-4">I'm currently training! Text me for a quick response about your dog.</p>
+                                <button onClick={() => window.location.href = `sms:+18124831632`} className="w-full bg-orange-500 text-white font-black py-4 rounded-2xl uppercase shadow-lg text-sm tracking-tighter active:scale-95 transition-transform">Text Me A Question</button>
+                            </div>
+                        )}
+
+                        {view === 'login' && (
+                            <div className="text-center">
+                                <input type="password" 
+                                    className="w-full border-2 border-orange-100 rounded-2xl p-4 text-center text-xl outline-none focus:border-orange-400 mb-4" 
+                                    placeholder="Enter Code" 
+                                    value={pass} 
+                                    onChange={e => setPass(e.target.value)} />
+                                <button onClick={checkPass} className="w-full bg-orange-500 text-white font-black py-4 rounded-2xl uppercase shadow-md">Unlock Training</button>
+                            </div>
+                        )}
+
+                        {view === 'admin' && (
+                            <div className="bg-orange-50/50 p-5 rounded-3xl mb-6">
+                                <h2 className="font-black text-orange-800 mb-3 text-[10px] uppercase">Session Progress</h2>
+                                <input list="commands" 
+                                    className="w-full border-0 shadow-sm p-4 rounded-2xl mb-2 text-sm bg-white" 
+                                    placeholder="Pick or Type Command" 
+                                    value={newNote.n} 
+                                    onChange={e => setNewNote({ ...newNote, n: e.target.value })} />
+                                <datalist id="commands">
+                                    {lib.map(l => <option key={l} value={l} />)}
+                                </datalist>
+                                <textarea 
+                                    className="w-full border-0 shadow-sm p-4 rounded-2xl text-sm bg-white" 
+                                    placeholder="How did they do today?" 
+                                    value={newNote.ch} 
+                                    onChange={e => setNewNote({ ...newNote, ch: e.target.value })} />
+                                <button onClick={addNote} className="w-full bg-green-500 text-white font-black py-4 rounded-2xl mt-3 shadow-lg uppercase text-xs">Add To Summary</button>
+                            </div>
+                        )}
+
+                        {(view === 'client' || view === 'admin') && auth && (
+                            <div>
+                                <div className="flex justify-between items-center mb-6 px-1">
+                                    <h3 className="font-black text-gray-800 uppercase text-xs">Today's Session</h3>
+                                    <button onClick={() => window.print()} className="no-print text-[9px] bg-white font-black px-4 py-2 rounded-full border border-orange-200 text-orange-600 shadow-sm uppercase">Print Report</button>
+                                </div>
+                                <div className="space-y-4">
+                                    {notes.length > 0 ? notes.map(i => (
+                                        <div key={i.id} className="p-5 bg-white rounded-3xl border-l-8 border-orange-500 shadow-sm">
+                                            <h4 className="font-black text-orange-600 text-xs uppercase mb-1">{i.n}</h4>
+                                            <p className="text-xs text-gray-700 leading-relaxed">{i.ch}</p>
+                                        </div>
+                                    )) : <p className="text-center text-gray-400 text-xs italic py-8">No session notes recorded yet.</p>}
+                                </div>
+                            </div>
+                        )}
+                    </main>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+
 
 
