@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Dog Obedience | Management Portal</title>
+    
+    <link rel="apple-touch-icon" href="https://img.icons8.com/ios-filled/180/2d3436/german-shepherd.png">
+    <link rel="icon" href="https://img.icons8.com/ios-filled/180/2d3436/german-shepherd.png">
+
     <style>
         :root { --primary: #2d3436; --secondary: #0984e3; --bg: #f8f9fa; --text: #2d3436; --accent: #00b894; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
@@ -39,12 +43,20 @@
     <div id="publicArea">
         <div class="card">
             <h2>Welcome!</h2>
-            <p>Dedicated to helping dogs and their owners. Clients, please log in below.</p>
+            <p>I help dogs and their humans build lasting bonds. If you are a client, log in below.</p>
         </div>
+
+        <div class="card">
+            <h2>🙋 Question for the Trainer?</h2>
+            <input type="email" id="publicEmail" placeholder="Your Email">
+            <textarea id="publicMsg" placeholder="How can I help you and your dog today?"></textarea>
+            <button onclick="alert('Message sent! I will be in touch shortly.')" style="background: var(--primary);">Send Question</button>
+        </div>
+
         <div class="card" id="loginBox">
             <h2>🔒 Portal Login</h2>
-            <input type="password" id="passInput" placeholder="Enter Portal Password">
-            <button onclick="checkPass()">Login</button>
+            <input type="password" id="passInput" placeholder="Enter Password">
+            <button onclick="checkPass()">Login to Profile</button>
         </div>
     </div>
 
@@ -86,7 +98,7 @@
         <div class="card">
             <h2>📖 Training Journal</h2>
             <div class="admin-only hidden">
-                <textarea id="journalText" placeholder="Take notes..."></textarea>
+                <textarea id="journalText" placeholder="Session notes..."></textarea>
                 <button onclick="addJournal()">Save Note</button>
             </div>
             <div id="journalList" style="margin-top:15px;"></div>
@@ -124,11 +136,12 @@
 
         function addNewDog() {
             const name = document.getElementById('newDogName').value.trim();
-            if(!name) { alert("Please enter a name"); return; }
-            if(dogs[name]) { alert("Dog already exists"); return; }
-            dogs[name] = { photo: "", skills: [], journal: [] };
-            saveDogs();
-            updateDogSelector();
+            if(!name) return;
+            if(!dogs[name]) {
+                dogs[name] = { photo: "", skills: [], journal: [] };
+                saveDogs();
+                updateDogSelector();
+            }
             switchDog(name);
             document.getElementById('newDogName').value = '';
         }
@@ -145,8 +158,7 @@
 
         function addSkill() {
             const skill = document.getElementById('newSkill').value.trim();
-            if(!skill) return;
-            if(!currentDog) { alert("Select a dog first!"); return; }
+            if(!skill || !currentDog) return;
             dogs[currentDog].skills.push({name: skill, id: Date.now()});
             saveAndRefresh();
             document.getElementById('newSkill').value = '';
