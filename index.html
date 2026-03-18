@@ -1,111 +1,121 @@
-import React, { useState } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Dog Obedience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-orange-50">
+    <div id="root"></div>
 
-const AllDogObedienceApp = () => {
-  const [view, setView] = useState('admin'); 
-  const [commands, setCommands] = useState([
-    { id: 1, name: 'Place', characteristics: 'Must stay until released. Use the raised cot for boundaries.' },
-    { id: 2, name: 'Recall', characteristics: 'High-pitch verbal cue; reward immediately upon return.' }
-  ]);
-  const [newCommand, setNewCommand] = useState({ name: '', characteristics: '' });
+    <script type="text/babel">
+        const { useState } = React;
 
-  const addCommand = () => {
-    if (newCommand.name) {
-      setCommands([...commands, { ...newCommand, id: Date.now() }]);
-      setNewCommand({ name: '', characteristics: '' });
-    }
-  };
+        function AllDogObedienceApp() {
+            const [view, setView] = useState('admin'); 
+            const [commands, setCommands] = useState([
+                { id: 1, name: 'Place', characteristics: 'Must stay until released. Use the raised cot for boundaries.' },
+                { id: 2, name: 'Recall', characteristics: 'High-pitch verbal cue; reward immediately upon return.' }
+            ]);
+            const [newCommand, setNewCommand] = useState({ name: '', characteristics: '' });
 
-  return (
-    <div className="min-h-screen bg-orange-50 p-4 md:p-8 font-sans text-gray-800">
-      {/* Branding Header */}
-      <header className="mb-10 text-center flex flex-col items-center">
-        {/* Placeholder for your German Shepherd Logo */}
-        <div className="w-32 h-32 mb-2 flex items-center justify-center bg-white rounded-full shadow-md border-2 border-orange-200">
-           <span className="text-4xl text-orange-500 font-bold">ADO</span>
-        </div>
-        <h1 className="text-4xl font-black text-orange-600 uppercase tracking-tight">All Dog Obedience</h1>
-        <p className="text-lg italic font-medium text-gray-700">"Where no dog is left behind"</p>
-        <p className="mt-1 text-sm font-bold text-gray-500 underline">812-483-1632</p>
-        
-        <div className="mt-6 flex gap-4">
-          <button 
-            onClick={() => setView('admin')} 
-            className={`px-6 py-2 rounded-full font-bold transition ${view === 'admin' ? 'bg-orange-500 text-white shadow-lg' : 'bg-white text-orange-500 border-2 border-orange-500'}`}
-          >
-            Trainer Portal
-          </button>
-          <button 
-            onClick={() => setView('client')} 
-            className={`px-6 py-2 rounded-full font-bold transition ${view === 'client' ? 'bg-orange-500 text-white shadow-lg' : 'bg-white text-orange-500 border-2 border-orange-500'}`}
-          >
-            Client Portal
-          </button>
-        </div>
-      </header>
+            const addCommand = () => {
+                if (newCommand.name) {
+                    setCommands([...commands, { ...newCommand, id: Date.now() }]);
+                    setNewCommand({ name: '', characteristics: '' });
+                }
+            };
 
-      <main className="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-orange-100">
-        {view === 'admin' ? (
-          <div className="p-8 bg-orange-50/50">
-            <h2 className="text-2xl font-bold mb-6 text-orange-800">Admin: Update Client Skills</h2>
-            <div className="space-y-4">
-              <input 
-                className="w-full p-4 border-2 border-orange-200 rounded-xl focus:ring-4 focus:ring-orange-200 focus:outline-none"
-                placeholder="Command Name (e.g. Down-Stay)"
-                value={newCommand.name}
-                onChange={(e) => setNewCommand({...newCommand, name: e.target.value})}
-              />
-              <textarea 
-                className="w-full p-4 border-2 border-orange-200 rounded-xl focus:ring-4 focus:ring-orange-200 focus:outline-none"
-                placeholder="Key Characteristics & Special Instructions for this dog..."
-                rows="4"
-                value={newCommand.characteristics}
-                onChange={(e) => setNewCommand({...newCommand, characteristics: e.target.value})}
-              />
-              <button 
-                onClick={addCommand}
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-black py-4 rounded-xl shadow-lg transition-transform active:scale-95 uppercase"
-              >
-                Save Skill to Client Profile
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="p-8">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">Training Progress</h2>
-              <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-bold">Appt: Mon @ 4pm</span>
-            </div>
-            <p className="text-gray-600 mb-8 italic">Review your dog's specific command requirements below.</p>
-          </div>
-        )}
+            return (
+                <div className="min-h-screen p-4 md:p-8">
+                    <header className="mb-10 text-center flex flex-col items-center">
+                        <div className="w-24 h-24 mb-4 flex items-center justify-center bg-white rounded-full shadow-lg border-2 border-orange-200">
+                           <span className="text-3xl text-orange-500 font-black">ADO</span>
+                        </div>
+                        <h1 className="text-3xl font-black text-orange-600 uppercase tracking-tight">All Dog Obedience</h1>
+                        <p className="text-lg italic font-medium text-gray-700">"Where no dog is left behind"</p>
+                        <p className="mt-2 font-bold text-gray-500">812-483-1632</p>
+                        
+                        <div className="mt-6 flex gap-3">
+                            <button 
+                                onClick={() => setView('admin')} 
+                                className={`px-6 py-2 rounded-full font-bold transition-all ${view === 'admin' ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-orange-500 border border-orange-500'}`}
+                            >
+                                Trainer
+                            </button>
+                            <button 
+                                onClick={() => setView('client')} 
+                                className={`px-6 py-2 rounded-full font-bold transition-all ${view === 'client' ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-orange-500 border border-orange-500'}`}
+                            >
+                                Client
+                            </button>
+                        </div>
+                    </header>
 
-        {/* The Live Skill List */}
-        <div className="px-8 pb-8">
-          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <span className="w-2 h-6 bg-orange-500 rounded-full"></span>
-            Active Commands & Skills
-          </h3>
-          <div className="space-y-4">
-            {commands.map((cmd) => (
-              <div key={cmd.id} className="group p-5 bg-white border-2 border-gray-100 rounded-2xl hover:border-orange-300 transition shadow-sm">
-                <h4 className="font-black text-orange-600 text-lg uppercase">{cmd.name}</h4>
-                <div className="mt-2 p-3 bg-gray-50 rounded-lg border-l-4 border-orange-400">
-                  <p className="text-gray-700 leading-relaxed">
-                    <span className="font-bold text-xs uppercase text-gray-400 block mb-1">Key Characteristics:</span>
-                    {cmd.characteristics}
-                  </p>
+                    <main className="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-orange-100">
+                        {view === 'admin' ? (
+                            <div className="p-6 bg-orange-50/30">
+                                <h2 className="text-xl font-bold mb-4 text-orange-800 tracking-tight">Add Key Characteristics</h2>
+                                <div className="space-y-3">
+                                    <input 
+                                        className="w-full p-3 border border-orange-200 rounded-xl focus:ring-2 focus:ring-orange-300 outline-none"
+                                        placeholder="Command Name"
+                                        value={newCommand.name}
+                                        onChange={(e) => setNewCommand({...newCommand, name: e.target.value})}
+                                    />
+                                    <textarea 
+                                        className="w-full p-3 border border-orange-200 rounded-xl focus:ring-2 focus:ring-orange-300 outline-none"
+                                        placeholder="Special instructions or characteristics..."
+                                        rows="3"
+                                        value={newCommand.characteristics}
+                                        onChange={(e) => setNewCommand({...newCommand, characteristics: e.target.value})}
+                                    />
+                                    <button 
+                                        onClick={addCommand}
+                                        className="w-full bg-orange-500 text-white font-bold py-3 rounded-xl hover:bg-orange-600 transition"
+                                    >
+                                        Save to List
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="p-6">
+                                <h2 className="text-xl font-bold text-gray-800">Your Dog's Training</h2>
+                                <p className="text-sm text-gray-500 mb-4 font-medium">Updated by Jennifer Schmett</p>
+                            </div>
+                        )}
+
+                        <div className="p-6">
+                            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                                <div className="w-1.5 h-5 bg-orange-500 rounded-full"></div>
+                                Active Skills
+                            </h3>
+                            <div className="space-y-4">
+                                {commands.map((cmd) => (
+                                    <div key={cmd.id} className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                        <h4 className="font-black text-orange-600 uppercase text-sm tracking-wider">{cmd.name}</h4>
+                                        <p className="mt-1 text-gray-700 text-sm leading-relaxed italic border-l-2 border-orange-200 pl-3">
+                                            {cmd.characteristics}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </main>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </main>
+            );
+        }
 
-      <footer className="mt-12 text-center text-gray-400 text-sm">
-        © 2026 All Dog Obedience • Professional Client Management
-      </footer>
-    </div>
-  );
-};
-
-export default AllDogObedienceApp;
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<AllDogObedienceApp />);
+    </script>
+</body>
+</html>
