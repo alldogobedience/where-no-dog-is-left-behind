@@ -12,7 +12,7 @@
         /* PRINT STYLES - Customizes the look for the physical paper/PDF */
         @media print {
             nav, .no-print, button, .admin-controls { display: none !important; }
-            body { background: white; padding: 0; }
+            body { background: white !padding: 0; }
             .print-container { width: 100%; border: none !important; box-shadow: none !important; margin: 0 !important; padding: 20px !important; }
             .progress-bg { border: 1px solid #283618 !important; background-color: #f3f4f6 !important; -webkit-print-color-adjust: exact; }
             .progress-fill { background-color: #283618 !important; -webkit-print-color-adjust: exact; }
@@ -39,7 +39,7 @@
         
         <section id="public-section" class="pt-8">
             <div class="text-center mb-10">
-                <img src="logo.PNG" alt="All Dog Obedience Logo" class="w-48 h-48 mx-auto rounded-full shadow-2xl border-4 border-white mb-6 object-cover">
+                <img src="Logo.PNG" alt="All Dog Obedience Logo" class="w-48 h-48 mx-auto rounded-full shadow-2xl border-4 border-white mb-6 object-cover">
                 <h1 class="text-3xl font-black italic text-green-900 leading-tight">"Where No Dog Is<br>Left Behind"</h1>
             </div>
 
@@ -60,14 +60,14 @@
             <div class="print-container glass-card rounded-3xl p-8 shadow-xl bg-white">
                 
                 <div class="hidden print:block text-center mb-8">
-                    <img src="logo.PNG" class="w-32 h-32 mx-auto mb-2">
+                    <img src="Logo.PNG" class="w-32 h-32 mx-auto mb-2">
                     <h2 class="text-2xl font-black uppercase text-green-900">Training Progress Report</h2>
                     <div class="h-1 w-20 bg-green-800 mx-auto mt-2"></div>
                 </div>
 
                 <div class="mb-8">
-                    <h2 class="text-4xl font-black text-green-900 leading-tight" id="display-name text-center uppercase">Buddy</h2>
-                    <p class="text-xs font-bold text-green-700 uppercase tracking-widest mt-1">Status: Training in Progress</p>
+                    <h2 class="text-4xl font-black text-green-900 leading-tight text-center uppercase" id="display-name">Buddy</h2>
+                    <p class="text-xs font-bold text-green-700 uppercase tracking-widest mt-1 text-center">Status: Training in Progress</p>
                 </div>
 
                 <div class="space-y-8 mb-10">
