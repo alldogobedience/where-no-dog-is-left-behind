@@ -3,160 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Dog Obedience | Trainer Portal</title>
+    <title>All Dog Obedience | Welcome Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Inter:wght@800;900&display=swap');
         
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; margin: 0; padding: 0; }
+        body { font-family: 'Quicksand', sans-serif; background-color: #f0f9ff; color: #1e293b; margin: 0; }
         
-        @media print {
-            nav, .no-print, button { display: none !important; }
-            body { background: white !important; }
-        }
-
-        /* ALL BUTTONS UNIFIED COLOR */
+        /* Unified Blue Oval Buttons */
         .btn-oval { 
-            background-color: #1e293b !important; /* Dark Navy Blue */
+            background-color: #1e3a8a !important; 
             color: #ffffff !important; 
-            padding: 10px 16px !important;
-            border-radius: 9999px !important;
-            font-size: 10px !important;
+            padding: 12px 24px !important;
+            border-radius: 50px !important;
+            font-size: 11px !important;
             font-weight: 800 !important;
             text-transform: uppercase !important;
-            letter-spacing: 0.05em !important;
+            letter-spacing: 0.1em !important;
             border: none !important;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-            transition: opacity 0.2s;
+            box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2) !important;
+            cursor: pointer;
         }
-        .btn-oval:hover { opacity: 0.9; }
 
-        /* RE-STRAIGHTENED COIN */
+        /* Straightened Coin Logo */
         .coin-frame {
-            width: 260px; height: 260px; margin: 0 auto;
+            width: 240px; height: 240px; margin: 0 auto;
             clip-path: circle(48% at 50% 50%);
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
-            /* Reset to a very mild 5deg to keep it natural but upright */
-            transform: perspective(1000px) rotateX(5deg);
-            margin-top: 20px; margin-bottom: 30px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+            transform: perspective(1000px) rotateX(5deg); /* Low tilt for upright look */
+            margin-bottom: 20px;
         }
         .coin-img { width: 100%; height: 100%; object-fit: cover; }
 
-        .glass-card { background: white; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); }
+        /* Cute "Bubble" Cards */
+        .dog-card {
+            background: white;
+            border-radius: 35px;
+            padding: 25px;
+            border: 3px solid #e0f2fe;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            transition: transform 0.2s;
+        }
+        .dog-card:hover { transform: translateY(-5px); }
+
+        .skill-badge {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 6px 15px;
+            border-radius: 15px;
+            display: inline-block;
+            margin: 4px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .section-hidden { display: none; }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-[#f0f9ff] to-white">
+<body class="min-h-screen pb-20">
 
-    <nav class="p-6 flex justify-center items-center max-w-4xl mx-auto no-print gap-2">
+    <nav class="p-6 flex justify-center gap-3 no-print">
         <button onclick="showSection('public')" class="btn-oval">Home</button>
-        <button onclick="showSection('portal')" class="btn-oval">Client Portal</button>
-        <button onclick="showSection('admin')" class="btn-oval">Trainer Login</button>
+        <button onclick="checkPassword('client')" class="btn-oval">Client Portal</button>
+        <button onclick="checkPassword('trainer')" class="btn-oval">Trainer Login</button>
     </nav>
 
-    <main class="max-w-md mx-auto px-6 pb-20">
+    <main class="max-w-md mx-auto px-6">
         
-        <section id="public-section" class="pt-2 text-center">
+        <section id="public-section" class="text-center pt-4">
             <div class="coin-frame"><img src="Logo.PNG" class="coin-img"></div>
+            <h1 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">Welcome! 🐾</h1>
             
-            <div class="glass-card rounded-3xl p-8 mb-8 text-left">
-                <h3 class="text-2xl font-black text-slate-900 mb-1 tracking-tight">Ask the Trainer</h3>
-                <p class="text-sm text-gray-500 mb-6 font-medium">Direct line for expert obedience advice.</p>
-                <a href="sms:+18124831632" class="bg-slate-900 w-full block text-center text-white font-bold py-5 rounded-2xl shadow-xl text-sm uppercase tracking-widest">Send Text Message</a>
+            <div class="dog-card text-left mb-6">
+                <h3 class="text-xl font-bold mb-2">Ask the Trainer</h3>
+                <p class="text-sm text-slate-500 mb-6">Need quick advice? Send us a text!</p>
+                <a href="sms:+18124831632" class="block w-full text-center py-4 bg-slate-900 text-white rounded-2xl font-bold uppercase tracking-widest text-xs">Send Message</a>
             </div>
 
-            <div class="bg-slate-900 rounded-3xl p-8 text-white shadow-2xl text-left relative overflow-hidden">
-                <span class="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Expert Tip of the Day</span>
-                <p id="display-tip" class="mt-4 text-xl font-medium italic leading-relaxed">"Consistency is the key to a reliable dog. Start small, stay steady."</p>
-            </div>
-        </section>
-
-        <section id="portal-section" class="hidden pt-8">
-            <div class="glass-card rounded-3xl p-10 bg-white shadow-2xl text-center">
-                <div class="mb-10 text-center">
-                     <div class="w-24 h-24 mx-auto" style="clip-path: circle(50%); border: 2px solid #f1f5f9;">
-                        <img src="Logo.PNG" class="w-full h-full object-cover">
-                     </div>
-                    <h2 class="text-xl font-black uppercase text-slate-900 mt-6 tracking-tighter">Progress Report</h2>
-                </div>
-                <div class="mb-12">
-                    <h2 class="text-6xl font-black text-slate-900 uppercase tracking-tighter" id="display-name">Rex</h2>
-                    <p class="text-[11px] font-bold text-blue-700 uppercase tracking-widest mt-3">Training Summary</p>
-                </div>
-                <div id="display-skills-container" class="space-y-10 mb-12 max-w-xs mx-auto"></div>
-                <div class="p-8 bg-blue-50 rounded-3xl border border-blue-100 text-left">
-                    <h4 class="text-[11px] font-black uppercase text-slate-900 mb-3 tracking-widest">Homework:</h4>
-                    <p id="display-homework" class="text-base italic text-slate-700 leading-relaxed">Keep practicing daily!</p>
-                </div>
+            <div class="bg-blue-600 rounded-[35px] p-8 text-white text-left shadow-xl relative overflow-hidden">
+                <span class="text-[10px] font-bold uppercase tracking-widest opacity-60">Expert Tip of the Day</span>
+                <p id="display-tip" class="mt-3 text-lg font-semibold italic">"Consistency is the key to a happy, confident dog!"</p>
             </div>
         </section>
 
-        <section id="admin-section" class="hidden pt-8">
-            <div class="bg-slate-900 text-white p-8 rounded-3xl shadow-2xl">
-                <h2 class="font-black text-center mb-8 uppercase text-xs tracking-widest">Trainer Control Panel</h2>
+        <section id="portal-section" class="section-hidden pt-4">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-black text-slate-900">Current Students</h2>
+                <p class="text-slate-500 font-medium">Click on your dog's card to see progress!</p>
+            </div>
+            <div id="dog-list-container" class="space-y-6">
+                </div>
+        </section>
+
+        <section id="dog-detail-section" class="section-hidden pt-4">
+            <button onclick="showSection('portal')" class="mb-4 text-blue-600 font-bold text-sm">← Back to List</button>
+            <div id="detail-content"></div>
+        </section>
+
+        <section id="admin-section" class="section-hidden pt-4">
+            <div class="bg-slate-900 text-white p-8 rounded-[40px] shadow-2xl">
+                <h2 class="text-center font-black uppercase text-xs tracking-widest mb-8 text-blue-400">Trainer Control Panel</h2>
+                
                 <div class="space-y-6">
-                    <input id="in-name" type="text" placeholder="Dog's Name" class="w-full p-4 rounded-2xl text-black font-bold outline-none">
+                    <div>
+                        <label class="text-[10px] uppercase font-bold opacity-50 block mb-2">Dog's Name</label>
+                        <input id="in-name" type="text" placeholder="Buddy" class="w-full p-4 rounded-2xl text-black font-bold outline-none">
+                    </div>
                     
-                    <div id="admin-skills-list" class="space-y-4">
-                        <div class="skill-entry flex gap-2 items-center">
-                            <div class="flex-1"><input type="text" placeholder="Command" class="skill-name w-full p-4 rounded-2xl bg-slate-800 text-white text-sm"></div>
-                            <div class="w-20"><input type="number" placeholder="%" class="skill-percent w-full p-4 rounded-2xl bg-slate-800 text-white text-sm"></div>
-                            <button onclick="this.parentElement.remove()" class="text-red-500 font-black px-2">✕</button>
-                        </div>
+                    <div>
+                        <label class="text-[10px] uppercase font-bold opacity-50 block mb-2">Commands Mastered (Comma Separated)</label>
+                        <input id="in-skills" type="text" placeholder="Sit, Stay, Heel, Place" class="w-full p-4 rounded-2xl text-black font-medium outline-none">
                     </div>
 
-                    <button onclick="addSkillInput()" class="w-full border-2 border-dashed border-slate-700 py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest">+ Add Row</button>
-                    <textarea id="in-homework" class="w-full p-4 rounded-2xl text-black text-sm h-24 outline-none" placeholder="Homework Notes"></textarea>
-                    <textarea id="in-tip" class="w-full p-4 rounded-2xl text-black text-sm h-20 outline-none" placeholder="Homepage Tip"></textarea>
+                    <div>
+                        <label class="text-[10px] uppercase font-bold opacity-50 block mb-2">Trainer's Notes</label>
+                        <textarea id="in-notes" class="w-full p-4 rounded-2xl text-black text-sm h-32 outline-none" placeholder="How did they do today?"></textarea>
+                    </div>
+
+                    <button onclick="saveDogData()" class="w-full bg-blue-500 hover:bg-blue-400 text-white font-black py-5 rounded-2xl text-xs uppercase tracking-widest transition-all">Save Dog to Portal</button>
                     
-                    <button onclick="updateData()" class="bg-white w-full text-slate-900 font-black py-5 rounded-2xl text-xs uppercase shadow-2xl tracking-widest">Update Live Site</button>
+                    <div class="pt-6 border-t border-slate-800">
+                        <label class="text-[10px] uppercase font-bold opacity-50 block mb-2">Update Homepage Tip</label>
+                        <textarea id="in-tip" class="w-full p-4 rounded-2xl text-black text-sm h-20 outline-none" placeholder="Enter new tip..."></textarea>
+                        <button onclick="updateTipOnly()" class="w-full mt-3 bg-white text-slate-900 font-black py-3 rounded-xl text-[10px] uppercase tracking-widest">Update Tip Only</button>
+                    </div>
+
+                    <div id="manage-dogs" class="pt-6 border-t border-slate-800">
+                        <label class="text-[10px] uppercase font-bold opacity-50 block mb-4">Manage Current Dogs</label>
+                        <div id="admin-dog-list" class="space-y-2"></div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
+        // --- SETTINGS (Change Passwords Here) ---
+        const CLIENT_PASS = "doggy";
+        const TRAINER_PASS = "trainer123";
+        
+        let dogs = JSON.parse(localStorage.getItem('obedienceDogs')) || [];
+
+        function checkPassword(type) {
+            const entry = prompt("Please enter the password:");
+            if (type === 'client' && entry === CLIENT_PASS) {
+                renderDogPortal();
+                showSection('portal');
+            } else if (type === 'trainer' && entry === TRAINER_PASS) {
+                renderAdminList();
+                showSection('admin');
+            } else {
+                alert("Incorrect password!");
+            }
+        }
+
         function showSection(id) {
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-            document.getElementById(id + '-section').classList.remove('hidden');
+            document.querySelectorAll('section').forEach(s => s.classList.add('section-hidden'));
+            document.getElementById(id + '-section').classList.remove('section-hidden');
             window.scrollTo(0,0);
         }
 
-        function addSkillInput() {
-            const container = document.getElementById('admin-skills-list');
-            const newSkill = document.createElement('div');
-            newSkill.className = "skill-entry flex gap-2 items-center pt-3";
-            newSkill.innerHTML = `
-                <div class="flex-1"><input type="text" placeholder="Skill" class="skill-name w-full p-4 rounded-2xl bg-slate-800 text-white text-sm"></div>
-                <div class="w-20"><input type="number" placeholder="%" class="skill-percent w-full p-4 rounded-2xl bg-slate-800 text-white text-sm"></div>
-                <button onclick="this.parentElement.remove()" class="text-red-500 font-black px-2">✕</button>
-            `;
-            container.appendChild(newSkill);
+        function saveDogData() {
+            const name = document.getElementById('in-name').value;
+            const skills = document.getElementById('in-skills').value;
+            const notes = document.getElementById('in-notes').value;
+
+            if(!name) return alert("Please enter a dog name");
+
+            const newDog = { id: Date.now(), name, skills, notes };
+            dogs.push(newDog);
+            localStorage.setItem('obedienceDogs', JSON.stringify(dogs));
+            
+            document.getElementById('in-name').value = '';
+            document.getElementById('in-skills').value = '';
+            document.getElementById('in-notes').value = '';
+            
+            renderAdminList();
+            alert(name + " saved!");
         }
 
-        function updateData() {
-            document.getElementById('display-name').innerText = document.getElementById('in-name').value || "Rex";
-            document.getElementById('display-homework').innerText = document.getElementById('in-homework').value || "Keep practicing!";
-            const tipVal = document.getElementById('in-tip').value;
-            if(tipVal) document.getElementById('display-tip').innerText = `"${tipVal}"`;
-
-            const skillContainer = document.getElementById('display-skills-container');
-            skillContainer.innerHTML = ""; 
-            const names = document.querySelectorAll('.skill-name');
-            const percents = document.querySelectorAll('.skill-percent');
-            names.forEach((nameInput, index) => {
-                const name = nameInput.value;
-                const val = percents[index].value || 0;
-                if(name) {
-                    skillContainer.innerHTML += `
-                        <div class="text-center mb-8">
-                            <div class="flex justify-between text-[11px] font-black uppercase mb-3 tracking-widest text-slate-500 px-1"><span>${name}</span><span>${val}%</span></div>
-                            <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden border border-slate-200">
-                                <div class="bg-slate-900 h-full rounded-full" style="width: ${val}%"></div>
-                            </div>
-                        </div>`;
-                }
+        function renderDogPortal() {
+            const container = document.getElementById('dog-list-container');
+            container.innerHTML = dogs.length ? '' : '<p class="text-center opacity-50">No dogs currently in training.</p>';
+            
+            dogs.forEach(dog => {
+                container.innerHTML += `
+                    <div class="dog-card cursor-pointer" onclick="viewDogDetail(${dog.id})">
+                        <h3 class="text-2xl font-black text-slate-900">${dog.name}</h3>
+                        <p class="text-sm text-blue-600 font-bold uppercase tracking-widest">View Progress →</p>
+                    </div>
+                `;
             });
-            showSection('public');
+        }
+
+        function viewDogDetail(id) {
+            const dog = dogs.find(d => d.id === id);
+            const content = document.getElementById('detail-content');
+            
+            const skillHtml = dog.skills.split(',').map(s => `<span class="skill-badge">${s.trim()}</span>`).join('');
+
+            content.innerHTML = `
+                <div class="dog-card text-center">
+                    <div class="w-24 h-24 mx-auto mb-4" style="clip-path: circle(50%); border: 3px solid #f1f5f9;">
+                        <img src="Logo.PNG" class="w-full h-full object-cover">
+                    </div>
+                    <h2 class="text-5xl font-black text-slate-900 uppercase mb-2">${dog.name}</h2>
+                    <div class="mb-8">${skillHtml}</div>
+                    <div class="text-left bg-blue-50 p-6 rounded-3xl border border-blue-100">
+                        <h4 class="text-xs font-black uppercase mb-3 tracking-widest text-slate-400">Trainer's Notes</h4>
+                        <p class="text-slate-700 italic leading-relaxed">${dog.notes || 'No notes added yet.'}</p>
+                    </div>
+                </div>
+            `;
+            showSection('dog-detail');
+        }
+
+        function renderAdminList() {
+            const container = document.getElementById('admin-dog-list');
+            container.innerHTML = '';
+            dogs.forEach(dog => {
+                container.innerHTML += `
+                    <div class="flex justify-between items-center bg-slate-800 p-3 rounded-xl mb-2">
+                        <span class="font-bold">${dog.name}</span>
+                        <button onclick="deleteDog(${dog.id})" class="text-red-400 text-xs font-black uppercase">Remove</button>
+                    </div>
+                `;
+            });
+        }
+
+        function deleteDog(id) {
+            if(confirm("Are you sure?")) {
+                dogs = dogs.filter(d => d.id !== id);
+                localStorage.setItem('obedienceDogs', JSON.stringify(dogs));
+                renderAdminList();
+            }
+        }
+
+        function updateTipOnly() {
+            const tip = document.getElementById('in-tip').value;
+            if(tip) {
+                document.getElementById('display-tip').innerText = `"${tip}"`;
+                alert("Homepage tip updated!");
+            }
         }
     </script>
 </body>
