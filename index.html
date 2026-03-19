@@ -7,95 +7,123 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #fdfcf8; color: #1a2e05; }
+        body { font-family: 'Inter', sans-serif; background-color: #fdfcf8; color: #1a2e05; margin: 0; padding: 0; }
         
-        /* PRINT STYLES - This kicks in when you hit "Print" */
+        /* PRINT STYLES - Customizes the look for the physical paper/PDF */
         @media print {
-            nav, .no-print, button { display: none !important; }
+            nav, .no-print, button, .admin-controls { display: none !important; }
             body { background: white; padding: 0; }
-            .print-container { width: 100%; border: none !important; box-shadow: none !important; }
-            .progress-bg { border: 1px solid #283618 !important; }
+            .print-container { width: 100%; border: none !important; box-shadow: none !important; margin: 0 !important; padding: 20px !important; }
+            .progress-bg { border: 1px solid #283618 !important; background-color: #f3f4f6 !important; -webkit-print-color-adjust: exact; }
+            .progress-fill { background-color: #283618 !important; -webkit-print-color-adjust: exact; }
         }
 
         .btn-primary { background-color: #283618; transition: all 0.2s; }
         .btn-primary:hover { background-color: #43542c; transform: translateY(-1px); }
         .glass-card { background: white; border: 1px solid #e9edc9; box-shadow: 0 4px 20px rgba(40, 54, 24, 0.05); }
+        .warm-bg { background: linear-gradient(180deg, #fdfcf8 0%, #f4f1de 100%); }
     </style>
 </head>
-<body>
+<body class="warm-bg min-h-screen">
 
     <nav class="p-4 flex justify-between items-center max-w-4xl mx-auto no-print">
-        <div class="font-black text-lg text-green-900 tracking-tighter">ALL DOG OBEDIENCE</div>
+        <div class="font-black text-lg text-green-900 tracking-tighter uppercase">All Dog Obedience</div>
         <div class="flex gap-2">
-            <button onclick="showSection('public')" class="text-xs font-bold px-3 py-2">Home</button>
-            <button onclick="showSection('portal')" class="text-xs font-bold px-3 py-2">Portal</button>
-            <button onclick="showSection('admin')" class="bg-green-900 text-white px-4 py-2 rounded-full text-xs font-bold">Trainer Dashboard</button>
+            <button onclick="showSection('public')" class="text-[10px] font-bold px-2 py-2 uppercase tracking-tight">Home</button>
+            <button onclick="showSection('portal')" class="text-[10px] font-bold px-2 py-2 uppercase tracking-tight">Client View</button>
+            <button onclick="showSection('admin')" class="bg-green-900 text-white px-3 py-2 rounded-full text-[10px] font-bold uppercase tracking-tight">Trainer Login</button>
         </div>
     </nav>
 
-    <main class="max-w-xl mx-auto px-6 py-8">
+    <main class="max-w-md mx-auto px-6 pb-20">
         
-        <section id="public-section">
+        <section id="public-section" class="pt-8">
             <div class="text-center mb-10">
-                <img src="logo.png" alt="Logo" class="w-40 h-40 mx-auto rounded-full shadow-xl border-4 border-white mb-6">
-                <h1 class="text-3xl font-black italic text-green-900">"Where No Dog Is<br>Left Behind"</h1>
+                <img src="logo.PNG" alt="All Dog Obedience Logo" class="w-48 h-48 mx-auto rounded-full shadow-2xl border-4 border-white mb-6 object-cover">
+                <h1 class="text-3xl font-black italic text-green-900 leading-tight">"Where No Dog Is<br>Left Behind"</h1>
             </div>
-            <div class="glass-card rounded-3xl p-6 text-center">
-                <h3 class="text-xl font-black mb-4">Ask the Trainer</h3>
-                <a href="sms:+18124831632" class="btn-primary block text-white font-bold py-4 rounded-2xl shadow-lg">Send Text Message</a>
+
+            <div class="glass-card rounded-3xl p-6 mb-6">
+                <h3 class="text-xl font-black text-green-900 mb-2">Ask the Trainer</h3>
+                <p class="text-sm text-gray-600 mb-4 font-medium">Have a quick question? Send me a text message right here.</p>
+                <textarea class="w-full border-2 border-green-50 rounded-2xl p-4 text-sm mb-4 h-28 focus:border-green-800 outline-none transition-all" placeholder="How do I stop my pup from jumping?"></textarea>
+                <a href="sms:+18124831632" class="btn-primary w-full block text-center text-white font-bold py-4 rounded-2xl shadow-lg shadow-green-900/20">Send Text Message</a>
+            </div>
+
+            <div class="bg-green-900 rounded-3xl p-6 text-white shadow-xl">
+                <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-60">Daily Dog Tip</span>
+                <p class="mt-2 text-lg font-medium italic leading-relaxed">"Consistency isn't just about what you do, it's about when you do it. Feed and train at the same times to build trust."</p>
             </div>
         </section>
 
-        <section id="portal-section" class="hidden">
-            <div class="print-container bg-white rounded-3xl p-8 border border-gray-100 shadow-xl">
-                <div class="hidden print:block text-center mb-6">
-                    <img src="logo.png" class="w-32 h-32 mx-auto">
-                    <h2 class="text-2xl font-black uppercase mt-2">Graduation Report</h2>
+        <section id="portal-section" class="hidden pt-8">
+            <div class="print-container glass-card rounded-3xl p-8 shadow-xl bg-white">
+                
+                <div class="hidden print:block text-center mb-8">
+                    <img src="logo.PNG" class="w-32 h-32 mx-auto mb-2">
+                    <h2 class="text-2xl font-black uppercase text-green-900">Training Progress Report</h2>
+                    <div class="h-1 w-20 bg-green-800 mx-auto mt-2"></div>
                 </div>
 
                 <div class="mb-8">
-                    <h2 class="text-3xl font-black text-green-900 leading-tight" id="display-name">Rex</h2>
-                    <p class="text-sm font-bold text-green-700 uppercase tracking-widest">Training Summary</p>
+                    <h2 class="text-4xl font-black text-green-900 leading-tight" id="display-name text-center uppercase">Buddy</h2>
+                    <p class="text-xs font-bold text-green-700 uppercase tracking-widest mt-1">Status: Training in Progress</p>
                 </div>
 
-                <div class="space-y-6 mb-10">
+                <div class="space-y-8 mb-10">
                     <div>
-                        <div class="flex justify-between text-[10px] font-black uppercase mb-1"><span>Heel (On-Leash)</span><span id="heel-val">85%</span></div>
-                        <div class="progress-bg w-full bg-gray-100 h-3 rounded-full overflow-hidden"><div id="heel-bar" class="bg-green-800 h-full w-[85%]"></div></div>
+                        <div class="flex justify-between text-[10px] font-black uppercase mb-1"><span>Heel Mastery</span><span id="heel-val">75%</span></div>
+                        <div class="progress-bg w-full bg-gray-100 h-4 rounded-full overflow-hidden shadow-inner">
+                            <div id="heel-bar" class="progress-fill bg-green-800 h-full w-[75%] transition-all duration-1000"></div>
+                        </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-[10px] font-black uppercase mb-1"><span>Place Command</span><span id="place-val">60%</span></div>
-                        <div class="progress-bg w-full bg-gray-100 h-3 rounded-full overflow-hidden"><div id="place-bar" class="bg-green-800 h-full w-[60%]"></div></div>
+                        <div class="flex justify-between text-[10px] font-black uppercase mb-1"><span>Place Stay</span><span id="place-val">50%</span></div>
+                        <div class="progress-bg w-full bg-gray-100 h-4 rounded-full overflow-hidden shadow-inner">
+                            <div id="place-bar" class="progress-fill bg-green-800 h-full w-[50%] transition-all duration-1000"></div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="p-6 bg-gray-50 rounded-2xl border-l-4 border-green-800">
-                    <h4 class="text-[10px] font-black uppercase text-green-900 mb-2">Go-Home Homework:</h4>
-                    <p id="display-homework" class="text-sm leading-relaxed italic text-gray-700">Practice 15 minutes a day before meals to ensure long-term success!</p>
+                <div class="p-6 bg-green-50 rounded-2xl border-l-8 border-green-800">
+                    <h4 class="text-[10px] font-black uppercase text-green-900 mb-2 tracking-widest">Trainer's Instructions:</h4>
+                    <p id="display-homework" class="text-sm leading-relaxed italic text-gray-800 font-medium">Keep practicing the 'Place' command during dinner time to help with impulse control!</p>
                 </div>
                 
-                <div class="mt-12 hidden print:block text-center text-[10px] text-gray-400 font-bold uppercase">
-                    All Dog Obedience | 812-483-1632 | Where No Dog Is Left Behind
+                <div class="mt-12 hidden print:block text-center text-[10px] text-gray-400 font-bold uppercase tracking-widest border-t pt-4">
+                    All Dog Obedience • 812-483-1632 • Where No Dog Is Left Behind
                 </div>
             </div>
         </section>
 
-        <section id="admin-section" class="hidden">
-            <div class="bg-green-900 text-white p-6 rounded-3xl mb-6">
-                <h2 class="font-black text-center mb-4 uppercase text-xs tracking-widest">Editor</h2>
-                <div class="space-y-4">
-                    <input id="in-name" type="text" placeholder="Dog's Name" class="w-full p-3 rounded-xl text-black text-sm">
-                    
+        <section id="admin-section" class="hidden pt-8">
+            <div class="bg-green-900 text-white p-6 rounded-3xl shadow-2xl">
+                <h2 class="font-black text-center mb-6 uppercase text-sm tracking-widest">Update Dog Progress</h2>
+                
+                <div class="space-y-6">
                     <div>
-                        <label class="text-[10px] font-bold">Heel Mastery (%)</label>
-                        <input id="in-heel" type="range" class="w-full">
+                        <label class="text-[10px] font-black uppercase opacity-70">Dog's Name</label>
+                        <input id="in-name" type="text" placeholder="Buddy" class="w-full p-4 rounded-2xl text-black font-bold outline-none mt-1">
                     </div>
                     
-                    <textarea id="in-homework" placeholder="Write Graduation Homework here..." class="w-full p-3 rounded-xl text-black text-sm h-24"></textarea>
+                    <div>
+                        <label class="text-[10px] font-black uppercase opacity-70">Heel Progress</label>
+                        <input id="in-heel" type="range" min="0" max="100" value="75" class="w-full h-2 bg-green-700 rounded-lg appearance-none cursor-pointer mt-2">
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] font-black uppercase opacity-70">Place Progress</label>
+                        <input id="in-place" type="range" min="0" max="100" value="50" class="w-full h-2 bg-green-700 rounded-lg appearance-none cursor-pointer mt-2">
+                    </div>
                     
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="updateData()" class="bg-white text-green-900 font-bold p-4 rounded-2xl text-xs">Save & Preview</button>
-                        <button onclick="window.print()" class="bg-green-700 text-white font-bold p-4 rounded-2xl text-xs">🖨️ Print Packet</button>
+                    <div>
+                        <label class="text-[10px] font-black uppercase opacity-70">Trainer's Notes / Homework</label>
+                        <textarea id="in-homework" class="w-full p-4 rounded-2xl text-black text-sm h-32 outline-none mt-1" placeholder="Describe the homework for the client..."></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-3 pt-4">
+                        <button onclick="updateData()" class="bg-white text-green-900 font-black py-4 rounded-2xl text-sm uppercase shadow-xl hover:bg-gray-100 transition-all">Save & Preview Report</button>
+                        <button onclick="window.print()" class="bg-green-600 text-white font-black py-4 rounded-2xl text-sm uppercase shadow-xl hover:bg-green-500 transition-all border border-green-400">🖨️ Print Final Packet</button>
                     </div>
                 </div>
             </div>
@@ -104,23 +132,31 @@
     </main>
 
     <script>
+        // NAVIGATION LOGIC
         function showSection(id) {
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.getElementById('public-section').classList.add('hidden');
+            document.getElementById('portal-section').classList.add('hidden');
+            document.getElementById('admin-section').classList.add('hidden');
             document.getElementById(id + '-section').classList.remove('hidden');
+            window.scrollTo(0,0);
         }
 
+        // UPDATING DATA FROM ADMIN TO CLIENT VIEW
         function updateData() {
-            // Get data from Admin Inputs
-            const name = document.getElementById('in-name').value || "Rex";
+            const name = document.getElementById('in-name').value || "Buddy";
             const heel = document.getElementById('in-heel').value;
-            const homework = document.getElementById('in-homework').value || "Practice daily!";
+            const place = document.getElementById('in-place').value;
+            const homework = document.getElementById('in-homework').value || "Keep practicing!";
 
-            // Push data to Portal/Print View
+            // Push to Display
             document.getElementById('display-name').innerText = name;
             document.getElementById('heel-val').innerText = heel + "%";
             document.getElementById('heel-bar').style.width = heel + "%";
+            document.getElementById('place-val').innerText = place + "%";
+            document.getElementById('place-bar').style.width = place + "%";
             document.getElementById('display-homework').innerText = homework;
 
+            // Switch to the Report view so you can see it
             showSection('portal');
         }
     </script>
