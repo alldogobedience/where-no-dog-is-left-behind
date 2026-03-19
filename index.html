@@ -7,129 +7,102 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; margin: 0; padding: 0; }
+        
+        body { font-family: 'Inter', sans-serif; background-color: #f0f9ff; color: #0f172a; margin: 0; padding: 0; }
         
         @media print {
             nav, .no-print, button { display: none !important; }
             body { background: white !important; }
-            .print-container { width: 100%; border: none !important; box-shadow: none !important; padding: 20px !important; }
-            .progress-bg { border: 1px solid #1e293b !important; background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; }
-            .progress-fill { background-color: #1e293b !important; -webkit-print-color-adjust: exact; }
         }
 
-        /* Nav Buttons Styled as Ovals */
+        /* FORCED BLUE OVAL NAVIGATION */
         .nav-oval { 
-            background-color: #f1f5f9; 
-            color: #1e293b; 
-            border: 1px solid #e2e8f0;
-            padding: 8px 16px;
-            border-radius: 9999px;
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.2s;
+            background-color: #1e3a8a !important; 
+            color: #ffffff !important; 
+            padding: 10px 18px !important;
+            border-radius: 50px !important;
+            font-size: 10px !important;
+            font-weight: 800 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            border: none !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
         }
-        .nav-oval:hover { background-color: #e2e8f0; }
 
-        .btn-primary { background-color: #1e293b; transition: all 0.2s; }
-        .btn-primary:hover { background-color: #334155; transform: translateY(-1px); }
-        .glass-card { background: white; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); }
-        
-        /* AGGRESSIVE TILT CORRECTION */
+        /* THE "LEAN" FIX */
         .coin-frame {
-            width: 260px; height: 260px; margin: 0 auto;
+            width: 280px; height: 280px; margin: 0 auto;
             clip-path: circle(48% at 50% 50%);
             filter: drop-shadow(0 25px 35px rgba(0,0,0,0.2));
-            /* Increased to 25deg to pull that leaning image forward */
-            transform: perspective(1000px) rotateX(25deg);
-            margin-top: 10px; margin-bottom: 30px;
+            transform: perspective(1200px) rotateX(42deg);
+            margin-top: 20px; margin-bottom: 40px;
         }
         .coin-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .glass-card { background: white; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); }
+        
+        .delete-btn { color: #ef4444; font-weight: 900; padding: 10px; }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-[#f0f9ff] to-white">
 
-    <nav class="p-4 flex justify-center sm:justify-end items-center max-w-4xl mx-auto no-print gap-2">
-        <button onclick="showSection('public')" class="nav-oval shadow-sm">Home</button>
-        <button onclick="showSection('portal')" class="nav-oval shadow-sm">Client Portal</button>
-        <button onclick="showSection('admin')" class="bg-slate-800 text-white px-4 py-2 rounded-full text-[10px] font-bold uppercase shadow-md hover:bg-slate-700">Trainer Login</button>
+    <nav class="p-6 flex justify-center items-center max-w-4xl mx-auto no-print gap-3">
+        <button onclick="showSection('public')" class="nav-oval">Home</button>
+        <button onclick="showSection('portal')" class="nav-oval">Client Portal</button>
+        <button onclick="showSection('admin')" class="bg-slate-900 text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase shadow-lg">Trainer Login</button>
     </nav>
 
     <main class="max-w-md mx-auto px-6 pb-20">
         
         <section id="public-section" class="pt-2 text-center">
             <div class="coin-frame"><img src="Logo.PNG" class="coin-img"></div>
-            
-            <div class="glass-card rounded-3xl p-6 mb-6 text-left">
-                <h3 class="text-xl font-black text-slate-900 mb-1">Ask the Trainer</h3>
-                <p class="text-xs text-gray-500 mb-6 font-medium">Direct line for expert obedience advice.</p>
-                <a href="sms:+18124831632" class="btn-primary w-full block text-center text-white font-bold py-5 rounded-2xl shadow-lg text-sm uppercase tracking-widest">Send Text Message</a>
+            <div class="glass-card rounded-3xl p-8 mb-8 text-left">
+                <h3 class="text-2xl font-black text-slate-900 mb-1 tracking-tight">Ask the Trainer</h3>
+                <p class="text-sm text-gray-500 mb-6">Direct line for expert obedience advice.</p>
+                <a href="sms:+18124831632" class="bg-slate-900 w-full block text-center text-white font-bold py-5 rounded-2xl shadow-xl text-sm uppercase tracking-widest">Send Text Message</a>
             </div>
-
-            <div class="bg-slate-800 rounded-3xl p-6 text-white shadow-xl text-left relative overflow-hidden">
-                <span class="text-[9px] font-black uppercase tracking-[0.3em] opacity-50">Expert Tip of the Day</span>
-                <p id="display-tip" class="mt-3 text-lg font-medium italic leading-relaxed">"Consistency isn't just about what you do, it's about when you do it."</p>
-                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white opacity-5 rounded-full"></div>
+            <div class="bg-slate-900 rounded-3xl p-8 text-white shadow-2xl text-left relative overflow-hidden">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Expert Tip of the Day</span>
+                <p id="display-tip" class="mt-4 text-xl font-medium italic leading-relaxed">"Consistency isn't just about what you do, it's about when you do it."</p>
             </div>
         </section>
 
         <section id="portal-section" class="hidden pt-8">
-            <div class="print-container glass-card rounded-3xl p-8 bg-white shadow-xl text-center">
-                <div class="mb-8">
-                     <div class="w-24 h-24 mx-auto" style="clip-path: circle(50%); border: 2px solid #f1f5f9;">
+            <div class="glass-card rounded-3xl p-10 bg-white shadow-2xl text-center">
+                <div class="mb-10">
+                     <div class="w-28 h-28 mx-auto" style="clip-path: circle(50%); border: 3px solid #f1f5f9;">
                         <img src="Logo.PNG" class="w-full h-full object-cover">
                      </div>
-                    <h2 class="text-lg font-black uppercase text-slate-800 mt-4 tracking-tighter">Client Portal Report</h2>
+                    <h2 class="text-xl font-black uppercase text-slate-900 mt-6">Progress Report</h2>
                 </div>
-                <div class="mb-10">
-                    <h2 class="text-5xl font-black text-slate-900 uppercase tracking-tighter" id="display-name">Rex</h2>
-                    <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mt-2">Training Summary</p>
+                <div class="mb-12">
+                    <h2 class="text-6xl font-black text-slate-900 uppercase tracking-tighter" id="display-name">Rex</h2>
+                    <p class="text-[11px] font-bold text-blue-700 uppercase tracking-widest mt-3">Training Summary</p>
                 </div>
-                <div id="display-skills-container" class="space-y-8 mb-10 max-w-xs mx-auto"></div>
-                <div class="p-6 bg-blue-50/50 rounded-2xl border-t-2 border-blue-100 text-left">
-                    <h4 class="text-[10px] font-black uppercase text-slate-900 mb-2 tracking-widest">Homework & Notes:</h4>
-                    <p id="display-homework" class="text-sm italic text-slate-700 leading-relaxed">Keep practicing daily!</p>
+                <div id="display-skills-container" class="space-y-10 mb-12 max-w-xs mx-auto text-center"></div>
+                <div class="p-8 bg-blue-50 rounded-3xl border border-blue-100 text-left">
+                    <h4 class="text-[11px] font-black uppercase text-slate-900 mb-3 tracking-widest">Homework:</h4>
+                    <p id="display-homework" class="text-base italic text-slate-700 leading-relaxed">Keep practicing daily!</p>
                 </div>
             </div>
         </section>
 
         <section id="admin-section" class="hidden pt-8">
-            <div class="bg-slate-800 text-white p-6 rounded-3xl shadow-2xl">
-                <h2 class="font-black text-center mb-6 uppercase text-xs tracking-widest">Trainer Dashboard</h2>
+            <div class="bg-slate-900 text-white p-8 rounded-3xl shadow-2xl">
+                <h2 class="font-black text-center mb-8 uppercase text-xs tracking-widest">Trainer Control Panel</h2>
                 <div class="space-y-6">
-                    <div>
-                        <label class="text-[9px] uppercase opacity-50 font-bold">Dog's Name</label>
-                        <input id="in-name" type="text" placeholder="Buddy" class="w-full p-4 rounded-xl text-black font-bold outline-none mt-1">
-                    </div>
-                    
-                    <div id="admin-skills-list" class="space-y-4 border-t border-slate-700 pt-4">
-                        <label class="text-[9px] uppercase opacity-50 font-bold">Commands & Progress</label>
-                        <div class="skill-entry flex gap-2 items-end">
-                            <div class="flex-1">
-                                <input type="text" placeholder="Command" class="skill-name w-full p-3 rounded-xl bg-slate-700 text-white text-sm">
-                            </div>
-                            <div class="w-20">
-                                <input type="number" placeholder="%" class="skill-percent w-full p-3 rounded-xl bg-slate-700 text-white text-sm">
-                            </div>
+                    <input id="in-name" type="text" placeholder="Dog's Name" class="w-full p-4 rounded-2xl text-black font-bold outline-none">
+                    <div id="admin-skills-list" class="space-y-4">
+                        <div class="skill-entry flex gap-2 items-center">
+                            <div class="flex-1"><input type="text" placeholder="Command" class="skill-name w-full p-4 rounded-2xl bg-slate-800 text-white text-sm"></div>
+                            <div class="w-20"><input type="number" placeholder="%" class="skill-percent w-full p-4 rounded-2xl bg-slate-800 text-white text-sm"></div>
+                            <button onclick="this.parentElement.remove()" class="delete-btn">✕</button>
                         </div>
                     </div>
-                    <button onclick="addSkillInput()" class="w-full border border-slate-600 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-slate-700">+ Add Command Row</button>
-                    
-                    <div>
-                        <label class="text-[9px] uppercase opacity-50 font-bold">Homework Notes</label>
-                        <textarea id="in-homework" class="w-full p-4 rounded-xl text-black text-sm h-24 outline-none mt-1" placeholder="Describe the homework..."></textarea>
-                    </div>
-
-                    <div class="border-t border-slate-700 pt-4">
-                        <label class="text-[9px] uppercase opacity-50 font-bold tracking-widest">Update Tip of the Day</label>
-                        <textarea id="in-tip" class="w-full p-4 rounded-xl text-black text-sm h-20 outline-none mt-1" placeholder="Enter a new dog tip..."></textarea>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 gap-3 pt-4">
-                        <button onclick="updateData()" class="bg-white text-slate-900 font-black py-4 rounded-xl text-xs uppercase shadow-xl tracking-widest">Save All Updates</button>
-                        <button onclick="window.print()" class="bg-blue-600 text-white font-black py-4 rounded-xl text-xs uppercase shadow-xl tracking-widest">🖨️ Print Final Report</button>
-                    </div>
+                    <button onclick="addSkillInput()" class="w-full border-2 border-dashed border-slate-700 py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest">+ Add Row</button>
+                    <textarea id="in-homework" class="w-full p-4 rounded-2xl text-black text-sm h-28 outline-none" placeholder="Homework Notes"></textarea>
+                    <textarea id="in-tip" class="w-full p-4 rounded-2xl text-black text-sm h-20 outline-none" placeholder="Daily Tip"></textarea>
+                    <button onclick="updateData()" class="bg-white w-full text-slate-900 font-black py-5 rounded-2xl text-xs uppercase shadow-2xl tracking-widest">Update Site</button>
                 </div>
             </div>
         </section>
@@ -145,17 +118,18 @@
         function addSkillInput() {
             const container = document.getElementById('admin-skills-list');
             const newSkill = document.createElement('div');
-            newSkill.className = "skill-entry flex gap-2 items-end pt-2";
+            newSkill.className = "skill-entry flex gap-2 items-center pt-3";
             newSkill.innerHTML = `
-                <div class="flex-1"><input type="text" placeholder="Sit, Stay, etc." class="skill-name w-full p-3 rounded-xl bg-slate-700 text-white text-sm"></div>
-                <div class="w-20"><input type="number" placeholder="%" class="skill-percent w-full p-3 rounded-xl bg-slate-700 text-white text-sm"></div>
+                <div class="flex-1"><input type="text" placeholder="Skill" class="skill-name w-full p-4 rounded-2xl bg-slate-800 text-white text-sm"></div>
+                <div class="w-20"><input type="number" placeholder="%" class="skill-percent w-full p-4 rounded-2xl bg-slate-800 text-white text-sm"></div>
+                <button onclick="this.parentElement.remove()" class="delete-btn">✕</button>
             `;
             container.appendChild(newSkill);
         }
 
         function updateData() {
             document.getElementById('display-name').innerText = document.getElementById('in-name').value || "Rex";
-            document.getElementById('display-homework').innerText = document.getElementById('in-homework').value || "Keep practicing daily!";
+            document.getElementById('display-homework').innerText = document.getElementById('in-homework').value || "Keep practicing!";
             const tipVal = document.getElementById('in-tip').value;
             if(tipVal) document.getElementById('display-tip').innerText = `"${tipVal}"`;
 
@@ -167,13 +141,7 @@
                 const name = nameInput.value;
                 const val = percents[index].value || 0;
                 if(name) {
-                    skillContainer.innerHTML += `
-                        <div class="text-center">
-                            <div class="flex justify-between text-[10px] font-black uppercase mb-2 tracking-widest text-slate-500 px-1"><span>${name}</span><span>${val}%</span></div>
-                            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden border border-slate-50 shadow-inner">
-                                <div class="bg-slate-800 h-full transition-all duration-1000 ease-out rounded-full shadow-lg" style="width: ${val}%"></div>
-                            </div>
-                        </div>`;
+                    skillContainer.innerHTML += `<div class="text-center mb-8"><div class="flex justify-between text-[11px] font-black uppercase mb-3 tracking-widest text-slate-500 px-1"><span>${name}</span><span>${val}%</span></div><div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden border border-slate-200"><div class="bg-slate-900 h-full rounded-full" style="width: ${val}%"></div></div></div>`;
                 }
             });
             showSection('public');
