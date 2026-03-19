@@ -3,23 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Dog Obedience | Training Portal</title>
+    <title>All Dog Obedience | Trainer Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        
-        /* NEW LIGHT BLUE BACKGROUND */
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #f0f7ff; 
-            color: #0f172a; 
-            margin: 0; 
-            padding: 0; 
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f0f7ff; color: #0f172a; margin: 0; padding: 0; }
         
         @media print {
-            nav, .no-print, button, .admin-controls { display: none !important; }
-            body { background: white !important; padding: 0; }
+            nav, .no-print, .admin-controls, button { display: none !important; }
+            body { background: white !important; }
             .print-container { width: 100%; border: none !important; box-shadow: none !important; margin: 0 !important; padding: 20px !important; }
             .progress-bg { border: 1px solid #1e293b !important; background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; }
             .progress-fill { background-color: #1e293b !important; -webkit-print-color-adjust: exact; }
@@ -27,103 +19,86 @@
 
         .btn-primary { background-color: #1e293b; transition: all 0.2s; }
         .btn-primary:hover { background-color: #334155; transform: translateY(-1px); }
+        .glass-card { background: white; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); }
         
-        /* Glass card adjusted for blue theme */
-        .glass-card { 
-            background: white; 
-            border: 1px solid #e2e8f0; 
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); 
+        /* THE COIN FIX: Circular crop and perspective adjustment */
+        .coin-frame {
+            width: 220px; height: 220px; margin: 0 auto;
+            clip-path: circle(48% at 50% 50%);
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2));
+            transform: perspective(1000px) rotateX(12deg);
+            margin-top: 10px; margin-bottom: 30px;
         }
-
-        /* Fresh Blue Gradient Background */
-        .blue-bg { 
-            background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 100%); 
-        }
-        
-        /* PERSPECTIVE FIX: Counter-acts the "lean back" in the image */
-        .coin-fix {
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.12));
-            transform: perspective(1000px) rotateX(10deg); 
-            margin-top: 10px;
-        }
+        .coin-img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
-<body class="blue-bg min-h-screen">
+<body class="min-h-screen bg-gradient-to-b from-[#f0f7ff] to-white">
 
     <nav class="p-4 flex justify-end items-center max-w-4xl mx-auto no-print">
         <div class="flex gap-2">
-            <button onclick="showSection('public')" class="text-[10px] font-bold px-2 py-2 uppercase tracking-widest opacity-60 hover:opacity-100">Home</button>
-            <button onclick="showSection('portal')" class="text-[10px] font-bold px-2 py-2 uppercase tracking-widest opacity-60 hover:opacity-100">Client View</button>
-            <button onclick="showSection('admin')" class="bg-slate-800 text-white px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-tight shadow-md">Trainer Login</button>
+            <button onclick="showSection('public')" class="text-[10px] font-bold px-2 py-2 uppercase tracking-widest opacity-60">Home</button>
+            <button onclick="showSection('portal')" class="text-[10px] font-bold px-2 py-2 uppercase tracking-widest opacity-60">Client View</button>
+            <button onclick="showSection('admin')" class="bg-slate-800 text-white px-4 py-2 rounded-full text-[10px] font-bold uppercase shadow-md">Trainer Dashboard</button>
         </div>
     </nav>
 
     <main class="max-w-md mx-auto px-6 pb-20">
         
         <section id="public-section" class="pt-2 text-center">
-            <img src="Logo.PNG" alt="All Dog Obedience" class="w-64 h-64 mx-auto coin-fix object-contain mb-10">
-
+            <div class="coin-frame"><img src="Logo.PNG" class="coin-img"></div>
             <div class="glass-card rounded-3xl p-6 mb-6 text-left">
-                <h3 class="text-xl font-black text-slate-900 mb-1 tracking-tight">Ask the Trainer</h3>
-                <p class="text-xs text-gray-500 mb-6 font-medium">Direct line for obedience questions.</p>
-                <a href="sms:+18124831632" class="btn-primary w-full block text-center text-white font-bold py-5 rounded-2xl shadow-lg shadow-slate-900/20 text-sm uppercase tracking-widest">Send Text Message</a>
-            </div>
-
-            <div class="bg-slate-800 rounded-3xl p-6 text-white shadow-xl text-left relative overflow-hidden">
-                <span class="text-[9px] font-black uppercase tracking-[0.3em] opacity-50">Expert Tip of the Day</span>
-                <p class="mt-3 text-lg font-medium italic leading-relaxed">"A tired dog is a well-behaved dog. Mental stimulation is just as exhausting as a long walk!"</p>
-                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white opacity-5 rounded-full"></div>
+                <h3 class="text-xl font-black text-slate-900 mb-1">Ask the Trainer</h3>
+                <p class="text-xs text-gray-500 mb-6">Direct line for expert obedience advice.</p>
+                <a href="sms:+18124831632" class="btn-primary w-full block text-center text-white font-bold py-5 rounded-2xl shadow-lg text-sm uppercase tracking-widest">Send Text Message</a>
             </div>
         </section>
 
         <section id="portal-section" class="hidden pt-8">
-            <div class="print-container glass-card rounded-3xl p-8 shadow-xl bg-white">
+            <div class="print-container glass-card rounded-3xl p-8 bg-white shadow-xl">
                 <div class="text-center mb-8">
-                    <img src="Logo.PNG" class="w-32 h-32 mx-auto mb-4 coin-fix">
-                    <h2 class="text-xl font-black uppercase text-slate-800 tracking-tighter">Progress Report</h2>
-                    <div class="h-1 w-12 bg-slate-800 mx-auto mt-2"></div>
+                     <div class="w-24 h-24 mx-auto" style="clip-path: circle(50%); border: 2px solid #f1f5f9;">
+                        <img src="Logo.PNG" class="w-full h-full object-cover">
+                     </div>
+                    <h2 class="text-lg font-black uppercase text-slate-800 mt-4 tracking-tighter">Graduation Report</h2>
                 </div>
-
                 <div class="mb-10 text-center">
-                    <h2 class="text-5xl font-black text-slate-900 leading-none uppercase tracking-tighter" id="display-name">Buddy</h2>
-                    <p class="text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em] mt-3">Course Progress Status</p>
+                    <h2 class="text-5xl font-black text-slate-900 uppercase" id="display-name">Rex</h2>
+                    <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mt-2">Training Summary</p>
                 </div>
-
-                <div class="space-y-8 mb-10">
-                    <div>
-                        <div class="flex justify-between text-[10px] font-black uppercase mb-1 tracking-widest"><span>Heel Mastery</span><span id="heel-val">75%</span></div>
-                        <div class="progress-bg w-full bg-slate-50 h-3 rounded-full overflow-hidden border border-slate-100"><div id="heel-bar" class="progress-fill bg-slate-800 h-full w-[75%] transition-all duration-1000"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] font-black uppercase mb-1 tracking-widest"><span>Place Stay</span><span id="place-val">50%</span></div>
-                        <div class="progress-bg w-full bg-slate-50 h-3 rounded-full overflow-hidden border border-slate-100"><div id="place-bar" class="progress-fill bg-slate-800 h-full w-[50%] transition-all duration-1000"></div></div>
-                    </div>
-                </div>
-
+                <div id="display-skills-container" class="space-y-6 mb-10"></div>
                 <div class="p-6 bg-blue-50/50 rounded-2xl border-t-2 border-blue-100">
-                    <h4 class="text-[10px] font-black uppercase text-slate-900 mb-2 tracking-widest">Graduation Homework:</h4>
-                    <p id="display-homework" class="text-sm leading-relaxed text-slate-700 font-medium italic">Keep practicing!</p>
+                    <h4 class="text-[10px] font-black uppercase text-slate-900 mb-2">Homework:</h4>
+                    <p id="display-homework" class="text-sm italic text-slate-700">Keep practicing daily!</p>
                 </div>
             </div>
         </section>
 
         <section id="admin-section" class="hidden pt-8">
             <div class="bg-slate-800 text-white p-6 rounded-3xl shadow-2xl">
-                <h2 class="font-black text-center mb-6 uppercase text-xs tracking-[0.2em]">Trainer Control Panel</h2>
+                <h2 class="font-black text-center mb-6 uppercase text-xs tracking-widest">Trainer Dashboard</h2>
                 <div class="space-y-6">
-                    <input id="in-name" type="text" placeholder="Dog's Name" class="w-full p-4 rounded-xl text-black font-bold outline-none border-none">
-                    <div>
-                        <label class="text-[9px] font-black uppercase tracking-widest opacity-50">Heel Progress</label>
-                        <input id="in-heel" type="range" min="0" max="100" value="75" class="w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer mt-3">
+                    <input id="in-name" type="text" placeholder="Dog's Name" class="w-full p-4 rounded-xl text-black font-bold outline-none">
+                    
+                    <div id="admin-skills-list" class="space-y-4">
+                        <div class="skill-entry flex gap-2 items-end">
+                            <div class="flex-1">
+                                <label class="text-[9px] uppercase opacity-50">Skill Name</label>
+                                <input type="text" value="Heel" class="skill-name w-full p-2 rounded bg-slate-700 text-white text-sm">
+                            </div>
+                            <div class="w-24">
+                                <label class="text-[9px] uppercase opacity-50">Mastery %</label>
+                                <input type="number" value="85" class="skill-percent w-full p-2 rounded bg-slate-700 text-white text-sm">
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label class="text-[9px] font-black uppercase tracking-widest opacity-50">Place Progress</label>
-                        <input id="in-place" type="range" min="0" max="100" value="50" class="w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer mt-3">
-                    </div>
-                    <textarea id="in-homework" class="w-full p-4 rounded-xl text-black text-sm h-32 outline-none border-none" placeholder="Homework Notes"></textarea>
+
+                    <button onclick="addSkillInput()" class="w-full border-2 border-dashed border-slate-600 py-3 rounded-xl text-xs font-bold uppercase opacity-70">+ Add Another Command</button>
+                    
+                    <textarea id="in-homework" class="w-full p-4 rounded-xl text-black text-sm h-24 outline-none" placeholder="Homework Notes"></textarea>
+                    
                     <div class="grid grid-cols-1 gap-3 pt-4">
-                        <button onclick="updateData()" class="bg-white text-slate-900 font-black py-4 rounded-xl text-xs uppercase tracking-widest shadow-xl">Save & Preview</button>
-                        <button onclick="window.print()" class="bg-blue-600 text-white font-black py-4 rounded-xl text-xs uppercase tracking-widest shadow-xl">🖨️ Print Homework</button>
+                        <button onclick="updateData()" class="bg-white text-slate-900 font-black py-4 rounded-xl text-xs uppercase shadow-xl">Save & Preview</button>
+                        <button onclick="window.print()" class="bg-blue-600 text-white font-black py-4 rounded-xl text-xs uppercase shadow-xl">🖨️ Print Final Packet</button>
                     </div>
                 </div>
             </div>
@@ -132,23 +107,57 @@
 
     <script>
         function showSection(id) {
-            document.getElementById('public-section').classList.add('hidden');
-            document.getElementById('portal-section').classList.add('hidden');
-            document.getElementById('admin-section').classList.add('hidden');
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
             document.getElementById(id + '-section').classList.remove('hidden');
             window.scrollTo(0,0);
         }
+
+        function addSkillInput() {
+            const container = document.getElementById('admin-skills-list');
+            const newSkill = document.createElement('div');
+            newSkill.className = "skill-entry flex gap-2 items-end pt-2";
+            newSkill.innerHTML = `
+                <div class="flex-1">
+                    <input type="text" placeholder="Recall, Stay, etc." class="skill-name w-full p-2 rounded bg-slate-700 text-white text-sm">
+                </div>
+                <div class="w-24">
+                    <input type="number" placeholder="%" class="skill-percent w-full p-2 rounded bg-slate-700 text-white text-sm">
+                </div>
+            `;
+            container.appendChild(newSkill);
+        }
+
         function updateData() {
-            const name = document.getElementById('in-name').value || "Buddy";
-            const heel = document.getElementById('in-heel').value;
-            const place = document.getElementById('in-place').value;
-            const homework = document.getElementById('in-homework').value || "Keep practicing!";
-            document.getElementById('display-name').innerText = name;
-            document.getElementById('heel-val').innerText = heel + "%";
-            document.getElementById('heel-bar').style.width = heel + "%";
-            document.getElementById('place-val').innerText = place + "%";
-            document.getElementById('place-bar').style.width = place + "%";
-            document.getElementById('display-homework').innerText = homework;
+            // Update Name & Homework
+            document.getElementById('display-name').innerText = document.getElementById('in-name').value || "The Dog";
+            document.getElementById('display-homework').innerText = document.getElementById('in-homework').value || "Keep up the hard work!";
+
+            // Update Dynamic Skills
+            const skillContainer = document.getElementById('display-skills-container');
+            skillContainer.innerHTML = ""; // Clear old ones
+
+            const names = document.querySelectorAll('.skill-name');
+            const percents = document.querySelectorAll('.skill-percent');
+
+            names.forEach((nameInput, index) => {
+                const name = nameInput.value;
+                const val = percents[index].value || 0;
+                
+                if(name) {
+                    const skillHtml = `
+                        <div>
+                            <div class="flex justify-between text-[10px] font-black uppercase mb-1">
+                                <span>${name}</span><span>${val}%</span>
+                            </div>
+                            <div class="progress-bg w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                <div class="bg-slate-800 h-full transition-all duration-1000" style="width: ${val}%"></div>
+                            </div>
+                        </div>
+                    `;
+                    skillContainer.innerHTML += skillHtml;
+                }
+            });
+
             showSection('portal');
         }
     </script>
