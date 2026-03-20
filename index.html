@@ -7,23 +7,31 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
-        body { font-family: 'Quicksand', sans-serif; background-color: #f0f9ff; margin: 0; -webkit-tap-highlight-color: transparent; }
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&display=swap');
+        body { font-family: 'Quicksand', sans-serif; background-color: #f0f9ff; margin: 0; }
         
-        /* High-priority Button Styling */
-        .nav-container { position: relative; z-index: 9999; padding: 20px; display: flex; justify-content: center; gap: 10px; }
+        .nav-container { 
+            position: relative; 
+            z-index: 999; 
+            padding: 20px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 10px; 
+            background: #f0f9ff;
+        }
+        
         .btn-oval { 
             background-color: #1e3a8a !important; 
             color: white !important; 
-            padding: 12px 18px;
+            padding: 12px 20px;
             border-radius: 50px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 800;
             text-transform: uppercase;
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            touch-action: manipulation; /* Improves mobile response */
+            -webkit-appearance: none;
         }
 
         .coin-frame {
@@ -33,14 +41,14 @@
             display: flex; align-items: center; justify-content: center;
         }
         .coin-img { width: 100%; height: 100%; object-fit: cover; }
-        .dog-card { background: white; border-radius: 30px; padding: 20px; border: 2px solid #e0f2fe; margin-bottom: 20px; }
+        .dog-card { background: white; border-radius: 30px; padding: 25px; border: 2px solid #e0f2fe; margin-bottom: 20px; }
         .section-hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <nav class="nav-container">
-        <button onclick="showSection('public')" class="btn-oval">Home</button>
+        <button onclick="window.location.reload()" class="btn-oval">Home</button>
         <button onclick="handleLogin('client')" class="btn-oval">Clients</button>
         <button onclick="handleLogin('trainer')" class="btn-oval">Trainer</button>
     </nav>
@@ -48,87 +56,72 @@
     <main class="max-w-md mx-auto px-6">
         <section id="public-section">
             <div class="coin-frame"><img src="Logo.PNG" class="coin-img"></div>
-            <div class="dog-card">
-                <h3 class="text-xl font-bold mb-1">Ask the Trainer</h3>
-                <p class="text-sm text-slate-500 mb-4">Direct line for expert advice.</p>
+            <div class="dog-card text-center">
+                <h3 class="text-xl font-bold mb-2">Ask the Trainer</h3>
+                <p class="text-sm text-slate-500 mb-6">Direct line for expert advice.</p>
                 <a href="sms:+18124831632" class="block w-full text-center py-4 bg-slate-900 text-white rounded-2xl font-bold uppercase text-xs">Send Message</a>
             </div>
         </section>
 
         <section id="portal-section" class="section-hidden">
-            <h2 class="text-2xl font-black mb-4 text-center">Current Students</h2>
+            <h2 class="text-2xl font-black mb-6 text-center">Current Students</h2>
             <div id="dog-list-container" class="space-y-4"></div>
         </section>
 
         <section id="admin-section" class="section-hidden">
             <div class="bg-slate-900 text-white p-6 rounded-[35px]">
                 <h2 class="text-center font-bold text-blue-400 mb-6 uppercase text-xs">Trainer Control</h2>
-                <input id="in-name" type="text" placeholder="Dog's Name" class="w-full p-4 rounded-xl text-black mb-4">
-                <div id="admin-commands-list"></div>
-                <button onclick="addCommandInput()" class="w-full border border-slate-600 py-3 rounded-xl text-[10px] mb-4">+ ADD COMMAND</button>
-                <textarea id="in-notes" class="w-full p-4 rounded-xl text-black h-20 mb-4" placeholder="Notes"></textarea>
-                <button id="save-btn" onclick="saveDogData()" class="w-full bg-blue-600 py-4 rounded-xl font-bold">SAVE TO CLOUD</button>
+                <input id="in-name" type="text" placeholder="Dog Name" class="w-full p-4 rounded-xl text-black mb-4">
+                <textarea id="in-notes" class="w-full p-4 rounded-xl text-black h-24 mb-4" placeholder="General Notes"></textarea>
+                <button onclick="saveDogData()" class="w-full bg-blue-600 py-4 rounded-xl font-bold">SAVE TO CLOUD</button>
             </div>
         </section>
     </main>
 
     <script>
-        // Use a slight delay to ensure library is loaded
-        let supabase;
-        window.onload = () => {
-            const _URL = "https://yljpxwftoiofpvblcdlx.supabase.co";
-            const _KEY = "Sb_publishable_g7HKRXQQRJHAOO1hzp4RKg_7D9xJYnU";
-            supabase = window.supabase.createClient(_URL, _KEY);
-            console.log("App Initialized");
-        };
-
-        function showSection(id) {
-            document.getElementById('public-section').classList.add('section-hidden');
-            document.getElementById('portal-section').classList.add('section-hidden');
-            document.getElementById('admin-section').classList.add('section-hidden');
-            document.getElementById(id + '-section').classList.remove('section-hidden');
-        }
-
-        async function handleLogin(type) {
-            const pass = prompt("Enter Password:");
+        // Use a standard function declaration (more compatible with older mobile browsers)
+        function handleLogin(role) {
+            var pass = prompt("Enter " + role + " password:");
             if (!pass) return;
 
-            if ((type === 'client' && pass === 'doggy') || (type === 'trainer' && pass === 'trainer123')) {
-                // Fetch data
-                const { data } = await supabase.from('dogs').select('*').order('created_at', { ascending: false });
-                if (type === 'client') {
-                    renderClients(data);
-                    showSection('portal');
+            var correctPass = (role === 'client') ? 'doggy' : 'trainer123';
+
+            if (pass === correctPass) {
+                // Initialize Supabase ONLY after password is correct
+                var _URL = "https://yljpxwftoiofpvblcdlx.supabase.co";
+                var _KEY = "Sb_publishable_g7HKRXQQRJHAOO1hzp4RKg_7D9xJYnU";
+                var sb = window.supabase.createClient(_URL, _KEY);
+
+                if (role === 'client') {
+                    document.getElementById('public-section').classList.add('section-hidden');
+                    document.getElementById('portal-section').classList.remove('section-hidden');
+                    // Just a test to see if it switches
+                    alert("Welcome! Loading students...");
                 } else {
-                    showSection('admin');
+                    document.getElementById('public-section').classList.add('section-hidden');
+                    document.getElementById('admin-section').classList.remove('section-hidden');
                 }
             } else {
-                alert("Access Denied");
+                alert("Wrong password!");
             }
         }
 
-        function renderClients(data) {
-            const container = document.getElementById('dog-list-container');
-            container.innerHTML = data.map(dog => `
-                <div class="dog-card">
-                    <h3 class="text-xl font-bold">${dog.name}</h3>
-                    <p class="text-sm text-blue-600 font-bold">REPORT READY</p>
-                </div>
-            `).join('');
-        }
-        
-        // Simplified Add Command for testing
-        function addCommandInput() {
-            const div = document.createElement('div');
-            div.innerHTML = `<input type="text" class="cmd-name w-full p-2 mb-2 rounded bg-slate-700 text-white" placeholder="Command Name">`;
-            document.getElementById('admin-commands-list').appendChild(div);
-        }
-
         async function saveDogData() {
-            const name = document.getElementById('in-name').value;
-            const notes = document.getElementById('in-notes').value;
-            const { error } = await supabase.from('dogs').insert([{ name, notes, commands: [] }]);
-            if (error) alert("Error saving"); else location.reload();
+            var name = document.getElementById('in-name').value;
+            var notes = document.getElementById('in-notes').value;
+            if(!name) return alert("Name required");
+
+            var _URL = "https://yljpxwftoiofpvblcdlx.supabase.co";
+            var _KEY = "Sb_publishable_g7HKRXQQRJHAOO1hzp4RKg_7D9xJYnU";
+            var sb = window.supabase.createClient(_URL, _KEY);
+
+            var result = await sb.from('dogs').insert([{ name: name, notes: notes, commands: [] }]);
+            if (result.error) {
+                alert("Error: " + result.error.message);
+            } else {
+                alert("Saved!");
+                location.reload();
+            }
         }
     </script>
 </body>
