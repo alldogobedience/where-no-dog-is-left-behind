@@ -11,27 +11,15 @@
         body { font-family: 'Quicksand', sans-serif; background-color: #f0f9ff; margin: 0; }
         
         .nav-container { 
-            position: relative; 
-            z-index: 999; 
-            padding: 20px; 
-            display: flex; 
-            justify-content: center; 
-            gap: 10px; 
-            background: #f0f9ff;
+            position: relative; z-index: 999; padding: 20px; 
+            display: flex; justify-content: center; gap: 10px; background: #f0f9ff;
         }
         
         .btn-oval { 
-            background-color: #1e3a8a !important; 
-            color: white !important; 
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            -webkit-appearance: none;
+            background-color: #1e3a8a !important; color: white !important; 
+            padding: 12px 20px; border-radius: 50px; font-size: 10px;
+            font-weight: 800; text-transform: uppercase; border: none;
+            cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .coin-frame {
@@ -41,7 +29,20 @@
             display: flex; align-items: center; justify-content: center;
         }
         .coin-img { width: 100%; height: 100%; object-fit: cover; }
-        .dog-card { background: white; border-radius: 30px; padding: 25px; border: 2px solid #e0f2fe; margin-bottom: 20px; }
+        
+        /* Professional Client Card */
+        .dog-card { 
+            background: white; border-radius: 25px; padding: 20px; 
+            border: 1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .command-badge {
+            background: #dbeafe; color: #1e40af; padding: 4px 12px;
+            border-radius: 12px; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; display: inline-block; margin: 2px;
+        }
+
         .section-hidden { display: none !important; }
     </style>
 </head>
@@ -49,13 +50,13 @@
 
     <nav class="nav-container">
         <button onclick="window.location.reload()" class="btn-oval">Home</button>
-        <button onclick="handleLogin('client')" class="btn-oval">Clients</button>
-        <button onclick="handleLogin('trainer')" class="btn-oval">Trainer</button>
+        <button onclick="handleLogin('client')" class="btn-oval">Client Portal</button>
+        <button onclick="handleLogin('trainer')" class="btn-oval">Trainer Log</button>
     </nav>
 
     <main class="max-w-md mx-auto px-6">
         <section id="public-section">
-            <div class="coin-frame"><img src="Logo.PNG" class="coin-img"></div>
+            <div class="coin-frame"><img src="Logo.PNG" class="coin-img" alt="Logo"></div>
             <div class="dog-card text-center">
                 <h3 class="text-xl font-bold mb-2">Ask the Trainer</h3>
                 <p class="text-sm text-slate-500 mb-6">Direct line for expert advice.</p>
@@ -64,62 +65,109 @@
         </section>
 
         <section id="portal-section" class="section-hidden">
-            <h2 class="text-2xl font-black mb-6 text-center">Current Students</h2>
-            <div id="dog-list-container" class="space-y-4"></div>
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-black text-slate-800">Training Reports</h2>
+                <p class="text-xs text-slate-400 uppercase tracking-widest">Live Updates</p>
+            </div>
+            <div id="dog-list-container" class="space-y-4">
+                <p class="text-center text-slate-400 animate-pulse">Fetching records...</p>
+            </div>
         </section>
 
         <section id="admin-section" class="section-hidden">
-            <div class="bg-slate-900 text-white p-6 rounded-[35px]">
-                <h2 class="text-center font-bold text-blue-400 mb-6 uppercase text-xs">Trainer Control</h2>
-                <input id="in-name" type="text" placeholder="Dog Name" class="w-full p-4 rounded-xl text-black mb-4">
-                <textarea id="in-notes" class="w-full p-4 rounded-xl text-black h-24 mb-4" placeholder="General Notes"></textarea>
-                <button onclick="saveDogData()" class="w-full bg-blue-600 py-4 rounded-xl font-bold">SAVE TO CLOUD</button>
+            <div class="bg-slate-900 text-white p-6 rounded-[35px] shadow-2xl">
+                <h2 class="text-center font-bold text-blue-400 mb-6 uppercase text-xs tracking-tighter">Trainer Control Panel</h2>
+                
+                <label class="text-[10px] uppercase font-bold text-slate-400 ml-2">Dog Name</label>
+                <input id="in-name" type="text" placeholder="e.g. Buddy" class="w-full p-4 rounded-xl text-black mb-4 mt-1 border-none focus:ring-2 focus:ring-blue-500">
+                
+                <label class="text-[10px] uppercase font-bold text-slate-400 ml-2">Mastered Commands</label>
+                <input id="in-commands" type="text" placeholder="Easy, Focus, Kennel" class="w-full p-4 rounded-xl text-black mb-4 mt-1">
+                
+                <label class="text-[10px] uppercase font-bold text-slate-400 ml-2">Daily Progress Notes</label>
+                <textarea id="in-notes" class="w-full p-4 rounded-xl text-black h-24 mb-4 mt-1" placeholder="Buddy did great with eye contact today..."></textarea>
+                
+                <button onclick="saveDogData()" class="w-full bg-blue-600 hover:bg-blue-500 transition-colors py-4 rounded-xl font-bold text-sm uppercase tracking-widest">Save to Cloud</button>
             </div>
         </section>
     </main>
 
     <script>
-        // Use a standard function declaration (more compatible with older mobile browsers)
-        function handleLogin(role) {
+        const _URL = "https://yljpxwftoiofpvblcdlx.supabase.co";
+        const _KEY = "Sb_publishable_g7HKRXQQRJHAOO1hzp4RKg_7D9xJYnU";
+        // Initialize Supabase
+        const sb = window.supabase.createClient(_URL, _KEY);
+
+        async function handleLogin(role) {
             var pass = prompt("Enter " + role + " password:");
             if (!pass) return;
 
             var correctPass = (role === 'client') ? 'doggy' : 'trainer123';
 
             if (pass === correctPass) {
-                // Initialize Supabase ONLY after password is correct
-                var _URL = "https://yljpxwftoiofpvblcdlx.supabase.co";
-                var _KEY = "Sb_publishable_g7HKRXQQRJHAOO1hzp4RKg_7D9xJYnU";
-                var sb = window.supabase.createClient(_URL, _KEY);
-
+                document.getElementById('public-section').classList.add('section-hidden');
+                
                 if (role === 'client') {
-                    document.getElementById('public-section').classList.add('section-hidden');
                     document.getElementById('portal-section').classList.remove('section-hidden');
-                    // Just a test to see if it switches
-                    alert("Welcome! Loading students...");
+                    loadClientData();
                 } else {
-                    document.getElementById('public-section').classList.add('section-hidden');
                     document.getElementById('admin-section').classList.remove('section-hidden');
                 }
             } else {
-                alert("Wrong password!");
+                alert("Incorrect password.");
             }
+        }
+
+        async function loadClientData() {
+            const container = document.getElementById('dog-list-container');
+            
+            const { data, error } = await sb.from('dogs').select('*').order('created_at', { ascending: false });
+
+            if (error) {
+                container.innerHTML = `<p class="text-red-500 text-center">Error loading data.</p>`;
+                return;
+            }
+
+            container.innerHTML = ''; // Clear loading text
+
+            data.forEach(dog => {
+                // Split commands if they are stored as a string
+                const commandList = dog.commands ? dog.commands.split(',') : [];
+                
+                const card = document.createElement('div');
+                card.className = 'dog-card';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="text-lg font-black text-slate-800">${dog.name}</h4>
+                        <span class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded-md uppercase">Active Student</span>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4 italic">"${dog.notes || 'No notes yet.'}"</p>
+                    <div class="border-t pt-3">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Skills Mastered:</p>
+                        <div id="commands-${dog.id}">
+                            ${commandList.map(cmd => `<span class="command-badge">${cmd.trim()}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
         async function saveDogData() {
             var name = document.getElementById('in-name').value;
             var notes = document.getElementById('in-notes').value;
+            var commands = document.getElementById('in-commands').value;
+            
             if(!name) return alert("Name required");
 
-            var _URL = "https://yljpxwftoiofpvblcdlx.supabase.co";
-            var _KEY = "Sb_publishable_g7HKRXQQRJHAOO1hzp4RKg_7D9xJYnU";
-            var sb = window.supabase.createClient(_URL, _KEY);
+            const { data, error } = await sb.from('dogs').insert([
+                { name: name, notes: notes, commands: commands }
+            ]);
 
-            var result = await sb.from('dogs').insert([{ name: name, notes: notes, commands: [] }]);
-            if (result.error) {
-                alert("Error: " + result.error.message);
+            if (error) {
+                alert("Error: " + error.message);
             } else {
-                alert("Saved!");
+                alert("Data Saved Successfully!");
                 location.reload();
             }
         }
