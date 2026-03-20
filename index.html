@@ -14,23 +14,21 @@
         @media print {
             nav, .no-print, button, .delete-btn { display: none !important; }
             body { background: white !important; }
-            .dog-card { border: none !important; box-shadow: none !important; padding: 0 !important; }
+            .dog-card { border: none !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }
         }
 
         .btn-oval { 
             background-color: #1e3a8a !important; 
             color: #ffffff !important; 
-            padding: 12px 24px !important;
+            padding: 10px 20px !important;
             border-radius: 50px !important;
-            font-size: 11px !important;
+            font-size: 10px !important;
             font-weight: 800 !important;
             text-transform: uppercase !important;
             letter-spacing: 0.1em !important;
-            border: none !important;
-            box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2) !important;
+            transition: all 0.2s;
         }
 
-        /* Fixed Logo Styling - The Clean Coin Look */
         .coin-frame {
             width: 120px;
             height: 120px;
@@ -44,11 +42,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             border: 2px solid #e0f2fe;
         }
-        .coin-img { 
-            width: 90%; 
-            height: 90%; 
-            object-fit: contain; 
-        }
+        .coin-img { width: 90%; height: 90%; object-fit: contain; }
 
         .dog-card {
             background: white;
@@ -56,30 +50,24 @@
             padding: 25px;
             border: 3px solid #e0f2fe;
             box-shadow: 0 10px 25px rgba(0,0,0,0.03);
-            transition: transform 0.2s;
-        }
-        .dog-card:active { transform: scale(0.98); }
-
-        .command-row {
-            border-bottom: 1px solid #f1f5f9;
-            padding: 12px 0;
         }
 
+        .command-row { border-bottom: 1px solid #f1f5f9; padding: 12px 0; }
         .section-hidden { display: none; }
     </style>
 </head>
 <body class="min-h-screen pb-20">
 
-    <nav class="p-6 flex justify-center gap-3 no-print">
+    <nav class="p-6 flex justify-center gap-2 no-print">
         <button onclick="showSection('public')" class="btn-oval">Home</button>
-        <button onclick="checkPassword('client')" class="btn-oval">Client Portal</button>
-        <button onclick="checkPassword('trainer')" class="btn-oval">Trainer Login</button>
+        <button onclick="checkPassword('client')" class="btn-oval">Clients</button>
+        <button onclick="checkPassword('trainer')" class="btn-oval">Trainer</button>
     </nav>
 
     <main class="max-w-md mx-auto px-6">
         
         <section id="public-section" class="text-center pt-4">
-            <div class="coin-frame"><img src="Logo.PNG" class="coin-img"></div>
+            <div class="coin-frame"><img src="Logo.PNG" class="coin-img" alt="Logo"></div>
             <div class="dog-card text-left mb-6">
                 <h3 class="text-xl font-bold mb-2">Ask the Trainer</h3>
                 <p class="text-sm text-slate-500 mb-6">Direct line for expert advice.</p>
@@ -110,7 +98,7 @@
                     <div id="admin-commands-list" class="space-y-3">
                         <div class="command-entry flex flex-col gap-2 p-4 bg-slate-800 rounded-2xl">
                             <input type="text" placeholder="Command (e.g. Sit)" class="cmd-name bg-transparent border-b border-slate-700 outline-none text-white font-bold">
-                            <input type="text" placeholder="Note" class="cmd-note bg-transparent outline-none text-slate-400 text-sm">
+                            <input type="text" placeholder="Note (e.g. Holding for 30s)" class="cmd-note bg-transparent outline-none text-slate-400 text-sm">
                         </div>
                     </div>
 
@@ -123,16 +111,17 @@
 
                 <div id="manage-dogs" class="mt-10 pt-6 border-t border-slate-800">
                     <label class="text-[10px] uppercase font-bold opacity-50 block mb-4">Current Kennel (Cloud)</label>
-                    <div id="admin-dog-list" class="space-y-2"></div>
+                    <div id="admin-dog-list" class="space-y-2 text-sm"></div>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-        // --- CLOUD SETUP ---
+        // --- CONFIGURATION ---
         const _URL = "https://yljpxwftoiofpvblcdlx.supabase.co";
-        const _KEY = "Yljpxwftoiofpvblcdlx"; // Note: Ensure this is your actual 'anon public' key from Supabase
+        const _KEY = "Sb_publishable_g7HKRXQQRJHAOO1hzp4RKg_7D9xJYnU"; 
+        
         const supabase = window.supabase.createClient(_URL, _KEY);
 
         const CLIENT_PASS = "doggy";
@@ -154,7 +143,7 @@
 
         async function checkPassword(type) {
             const entry = prompt("Enter Password:");
-            await loadDogs(); // Always get fresh data on login
+            await loadDogs(); 
             if (type === 'client' && entry === CLIENT_PASS) { renderDogPortal(); showSection('portal'); }
             else if (type === 'trainer' && entry === TRAINER_PASS) { renderAdminList(); showSection('admin'); }
             else if (entry !== null) { alert("Wrong password"); }
@@ -162,11 +151,11 @@
 
         function addCommandInput() {
             const div = document.createElement('div');
-            div.className = "command-entry flex flex-col gap-2 p-4 bg-slate-800 rounded-2xl relative";
+            div.className = "command-entry flex flex-col gap-2 p-4 bg-slate-800 rounded-2xl relative mt-2";
             div.innerHTML = `
                 <input type="text" placeholder="Command" class="cmd-name bg-transparent border-b border-slate-700 outline-none text-white font-bold">
                 <input type="text" placeholder="Note" class="cmd-note bg-transparent outline-none text-slate-400 text-sm">
-                <button onclick="this.parentElement.remove()" class="absolute top-2 right-4 text-red-400 text-xs">✕</button>
+                <button onclick="this.parentElement.remove()" class="absolute top-2 right-4 text-red-400 text-xs font-bold">✕</button>
             `;
             document.getElementById('admin-commands-list').appendChild(div);
         }
@@ -182,9 +171,11 @@
                 if(input.value) commandData.push({ name: input.value, note: cmdNotes[i].value });
             });
 
-            if(!name) return alert("Name required");
+            if(!name) return alert("Please enter the dog's name");
             
-            document.getElementById('save-btn').innerText = "SAVING...";
+            const saveBtn = document.getElementById('save-btn');
+            saveBtn.innerText = "SAVING...";
+            saveBtn.disabled = true;
 
             const { error } = await supabase.from('dogs').insert([{ 
                 name: name, 
@@ -193,17 +184,19 @@
             }]);
 
             if(error) {
-                alert("Cloud Sync Failed. Check if your table 'dogs' exists in Supabase.");
+                alert("Cloud Sync Failed. Make sure your table is set up in Supabase!");
                 console.error(error);
+                saveBtn.innerText = "Save to Cloud";
+                saveBtn.disabled = false;
             } else {
-                alert("Report Saved to Cloud!");
-                location.reload();
+                alert("Report Saved successfully!");
+                location.reload(); 
             }
         }
 
         function renderDogPortal() {
             const container = document.getElementById('dog-list-container');
-            container.innerHTML = ''; 
+            container.innerHTML = dogs.length ? '' : '<p class="text-slate-400">No students found.</p>'; 
             dogs.forEach(dog => {
                 const div = document.createElement('div');
                 div.className = "dog-card cursor-pointer text-left";
@@ -221,24 +214,26 @@
             if(!dog) return;
 
             const content = document.getElementById('detail-content');
-            const cmdHtml = dog.commands.map(c => `
-                <div class="command-row">
-                    <div class="font-bold text-slate-900">${c.name}</div>
-                    <div class="text-sm text-slate-500 italic">${c.note}</div>
-                </div>
-            `).join('');
+            const cmdHtml = dog.commands && dog.commands.length 
+                ? dog.commands.map(c => `
+                    <div class="command-row">
+                        <div class="font-bold text-slate-900">${c.name}</div>
+                        <div class="text-sm text-slate-500 italic">${c.note || ''}</div>
+                    </div>
+                `).join('')
+                : '<p class="text-sm text-slate-400 py-4">No commands recorded yet.</p>';
 
             content.innerHTML = `
                 <div class="dog-card">
                     <div class="text-center mb-6">
-                        <div class="coin-frame"><img src="Logo.PNG" class="coin-img"></div>
+                        <div class="coin-frame"><img src="Logo.PNG" class="coin-img" alt="Logo"></div>
                         <h2 class="text-4xl font-black uppercase">${dog.name}</h2>
                         <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Training Report</p>
                     </div>
                     <div class="space-y-2 mb-8">${cmdHtml}</div>
                     <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100">
                         <h4 class="text-[10px] font-black uppercase mb-2 text-slate-400">Trainer's Summary</h4>
-                        <p class="text-sm text-slate-700 leading-relaxed">${dog.notes || 'Progressing well!'}</p>
+                        <p class="text-sm text-slate-700 leading-relaxed">${dog.notes || 'Your dog is doing great!'}</p>
                     </div>
                 </div>
             `;
@@ -247,18 +242,21 @@
 
         function renderAdminList() {
             const container = document.getElementById('admin-dog-list');
-            container.innerHTML = dogs.map(dog => `
-                <div class="flex justify-between items-center bg-slate-800 p-3 rounded-xl">
-                    <span class="font-bold">${dog.name}</span>
-                    <button onclick="deleteDog('${dog.id}')" class="text-red-400 text-[10px] font-bold uppercase">Delete</button>
-                </div>
-            `).join('');
+            container.innerHTML = dogs.length 
+                ? dogs.map(dog => `
+                    <div class="flex justify-between items-center bg-slate-800 p-4 rounded-2xl">
+                        <span class="font-bold">${dog.name}</span>
+                        <button onclick="deleteDog('${dog.id}')" class="text-red-400 text-[10px] font-bold uppercase bg-red-400/10 px-3 py-1 rounded-lg">Delete</button>
+                    </div>
+                `).join('')
+                : '<p class="text-slate-500 italic">No dogs in database.</p>';
         }
 
         async function deleteDog(id) {
-            if(confirm("Delete from Cloud?")) {
-                await supabase.from('dogs').delete().eq('id', id);
-                location.reload();
+            if(confirm("Are you sure you want to delete this report forever?")) {
+                const { error } = await supabase.from('dogs').delete().eq('id', id);
+                if(error) alert("Error deleting dog");
+                else location.reload();
             }
         }
     </script>
