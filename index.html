@@ -3,51 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>All Dog Obedience | Portal</title>
+    <title>All Dog Obedience | Training Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&display=swap');
         body { font-family: 'Quicksand', sans-serif; background-color: #f8fafc; margin: 0; color: #1e293b; }
         
-        /* Fixed & Enlarged Logo */
+        /* THE COIN: Enlarged, Balanced, and Locked Flat */
         .coin-frame {
-            width: 160px; height: 160px; margin: 20px auto;
+            width: 200px; height: 200px; margin: 25px auto;
             border-radius: 50%; overflow: hidden;
             background: white; border: 4px solid #fff;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             display: flex; align-items: center; justify-content: center;
+            transform: rotate(0deg) !important; /* Forces it to stay level */
         }
-        .coin-img { width: 100%; height: 100%; object-fit: cover; }
+        .coin-img { width: 100%; height: 100%; object-fit: cover; transform: none !important; }
 
-        .nav-container { padding: 20px; display: flex; justify-content: center; gap: 10px; }
+        .nav-container { padding: 20px; display: flex; justify-content: center; gap: 8px; }
         .btn-oval { 
-            background-color: #1e3a8a; color: white; padding: 12px 20px;
-            border-radius: 50px; font-size: 11px; font-weight: 800;
+            background-color: #1e3a8a; color: white; padding: 12px 18px;
+            border-radius: 50px; font-size: 10px; font-weight: 800;
             text-transform: uppercase; border: none; cursor: pointer;
         }
 
         .dog-card { 
-            background: white; border-radius: 24px; padding: 24px; 
-            border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            background: white; border-radius: 28px; padding: 24px; 
+            border: 1px solid #e2e8f0; margin-bottom: 20px;
         }
 
-        /* Command Grid Styling */
-        .cmd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
-        .cmd-btn { 
-            border: 2px solid #e2e8f0; padding: 10px; border-radius: 12px; 
-            font-size: 12px; font-weight: 700; text-align: center; cursor: pointer;
-        }
-        .cmd-btn.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
+        /* Trainer Dashboard Elements */
+        .cmd-item { background: #f1f5f9; padding: 12px; border-radius: 18px; margin-bottom: 10px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .cmd-item.active { border-color: #2563eb; background: #eff6ff; }
+        .cmd-note-input { width: 100%; margin-top: 10px; padding: 10px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 13px; display: none; color: black; }
+        .cmd-item.active .cmd-note-input { display: block; }
 
         .section-hidden { display: none !important; }
 
-        /* Print Optimization */
         @media print {
-            .nav-container, #public-section, button, .no-print { display: none !important; }
-            .dog-card { border: 1px solid #000; box-shadow: none; margin: 0; page-break-inside: avoid; }
-            body { background: white; }
+            .no-print { display: none !important; }
+            .dog-card { border: 1px solid #000; break-inside: avoid; }
         }
     </style>
 </head>
@@ -59,54 +55,63 @@
         <button onclick="handleLogin('trainer')" class="btn-oval">Trainer Log</button>
     </nav>
 
-    <main class="max-w-md mx-auto px-6 pb-20">
+    <main class="max-w-md mx-auto px-6 pb-24">
         
         <section id="public-section">
             <div class="coin-frame"><img src="Logo.PNG" class="coin-img"></div>
             
             <div id="fact-card" class="bg-blue-600 text-white p-6 rounded-[30px] mb-6 shadow-lg">
-                <p class="text-[10px] uppercase font-bold opacity-80 mb-1">Dog Fact of the Day</p>
-                <h2 id="display-fact" class="text-lg font-bold leading-tight">Loading daily fact...</h2>
+                <p class="text-[10px] uppercase font-bold opacity-70 mb-1">Dog Fact of the Day</p>
+                <h2 id="display-fact" class="text-lg font-bold leading-tight italic">"Loading the latest dog wisdom..."</h2>
             </div>
 
-            <div class="dog-card text-center">
+            <div class="dog-card text-center shadow-sm">
                 <h3 class="text-xl font-bold mb-1">Ask the Trainer</h3>
                 <p class="text-sm text-slate-500 mb-6">Direct line for expert advice.</p>
-                <a href="sms:+18124831632" class="block w-full text-center py-4 bg-slate-900 text-white rounded-2xl font-bold uppercase text-xs">Send Message</a>
+                <a href="sms:+18124831632" class="block w-full text-center py-4 bg-slate-900 text-white rounded-2xl font-bold uppercase text-xs tracking-widest">Send Message</a>
             </div>
         </section>
 
         <section id="portal-section" class="section-hidden">
-            <h2 class="text-2xl font-black mb-6 text-center">Training Reports</h2>
+            <h2 class="text-2xl font-black mb-6 text-center text-slate-800">Training History</h2>
             <div id="dog-list-container" class="space-y-6"></div>
         </section>
 
         <section id="admin-section" class="section-hidden">
-            <div class="bg-slate-900 text-white p-6 rounded-[35px]">
-                <h2 class="text-center font-bold text-blue-400 mb-6 uppercase text-xs tracking-widest">Trainer Control</h2>
+            <div class="bg-slate-900 text-white p-6 rounded-[35px] shadow-2xl">
+                <h2 class="text-center font-bold text-blue-400 mb-6 uppercase text-xs tracking-tighter">New Training Report</h2>
                 
-                <input id="in-name" type="text" placeholder="Dog's Name" class="w-full p-4 rounded-xl text-black mb-4 font-bold">
+                <input id="in-name" type="text" placeholder="Dog's Name" class="w-full p-4 rounded-xl text-black mb-4 font-bold outline-none focus:ring-4 focus:ring-blue-500/50">
                 
-                <p class="text-[10px] uppercase font-bold text-slate-400 mb-2 ml-2">Select Commands Worked On:</p>
-                <div class="cmd-grid" id="trainer-cmd-grid">
-                    <div class="cmd-btn" onclick="toggleCmd(this)">Sit</div>
-                    <div class="cmd-btn" onclick="toggleCmd(this)">Down</div>
-                    <div class="cmd-btn" onclick="toggleCmd(this)">Stay</div>
-                    <div class="cmd-btn" onclick="toggleCmd(this)">Calm</div>
-                    <div class="cmd-btn" onclick="toggleCmd(this)">Leave It</div>
-                    <div class="cmd-btn" onclick="toggleCmd(this)">Focus</div>
-                    <div class="cmd-btn" onclick="toggleCmd(this)">Stay Down</div>
-                    <div class="cmd-btn" onclick="toggleCmd(this)">Kennel</div>
+                <p class="text-[10px] uppercase font-bold text-slate-500 mb-3 ml-2">Click to add Commands & Notes:</p>
+                <div id="trainer-cmd-list" class="mb-4">
+                    <div class="cmd-item" onclick="this.classList.toggle('active')">
+                        <span class="font-bold text-slate-800">Sit</span>
+                        <input type="text" placeholder="How did Sit go?" class="cmd-note-input" onclick="event.stopPropagation()">
+                    </div>
+                    <div class="cmd-item" onclick="this.classList.toggle('active')">
+                        <span class="font-bold text-slate-800">Stay</span>
+                        <input type="text" placeholder="How was their Stay?" class="cmd-note-input" onclick="event.stopPropagation()">
+                    </div>
+                    <div class="cmd-item" onclick="this.classList.toggle('active')">
+                        <span class="font-bold text-slate-800">Down</span>
+                        <input type="text" placeholder="Note for Down..." class="cmd-note-input" onclick="event.stopPropagation()">
+                    </div>
                 </div>
 
-                <textarea id="in-notes" class="w-full p-4 rounded-xl text-black h-32 mb-4" placeholder="Session Notes..."></textarea>
+                <div class="flex gap-2 mb-6">
+                    <input id="new-cmd-input" type="text" placeholder="Custom Command..." class="flex-1 p-3 rounded-xl text-black text-sm">
+                    <button onclick="addNewCommand()" class="bg-blue-600 px-4 rounded-xl font-bold">+</button>
+                </div>
+
+                <textarea id="in-notes" class="w-full p-4 rounded-xl text-black h-24 mb-4" placeholder="General wrap-up notes..."></textarea>
                 
-                <button onclick="saveDogData()" class="w-full bg-blue-600 py-4 rounded-xl font-bold mb-8">SAVE REPORT</button>
+                <button onclick="saveDogData()" class="w-full bg-blue-600 py-4 rounded-xl font-bold mb-8 uppercase text-sm tracking-widest shadow-lg shadow-blue-500/20">Save Report</button>
 
                 <div class="border-t border-slate-700 pt-6">
-                    <p class="text-[10px] uppercase font-bold text-slate-400 mb-2">Update Dog Fact of the Day:</p>
-                    <textarea id="in-fact" class="w-full p-4 rounded-xl text-black h-20 mb-2" placeholder="Enter a cool dog fact..."></textarea>
-                    <button onclick="updateFact()" class="w-full bg-emerald-600 py-3 rounded-xl font-bold text-xs uppercase">Update Home Fact</button>
+                    <p class="text-[10px] uppercase font-bold text-slate-500 mb-2">Update Home Page Fact:</p>
+                    <textarea id="in-fact" class="w-full p-4 rounded-xl text-black h-20 mb-2 font-medium" placeholder="Dogs can learn over 100 words..."></textarea>
+                    <button onclick="updateFact()" class="w-full bg-emerald-600 py-3 rounded-xl font-bold text-xs uppercase">Update Daily Fact</button>
                 </div>
             </div>
         </section>
@@ -117,71 +122,102 @@
         const _KEY = "Sb_publishable_g7HKRXQQRJHAOO1hzp4RKg_7D9xJYnU";
         const sb = window.supabase.createClient(_URL, _KEY);
 
-        // Load Fact on Start
-        window.onload = async () => {
-            const { data } = await sb.from('settings').select('value').eq('key', 'dog_fact').single();
-            if (data) document.getElementById('display-fact').innerText = data.value;
-        };
+        // Load Global Fact on Page Load
+        async function fetchFact() {
+            try {
+                const { data } = await sb.from('settings').select('value').eq('key', 'dog_fact').single();
+                if (data) document.getElementById('display-fact').innerText = `"${data.value}"`;
+                else document.getElementById('display-fact').innerText = `"A dog is the only thing on earth that loves you more than he loves himself."`;
+            } catch (e) { console.log("Fact fetch error"); }
+        }
+        fetchFact();
 
-        function toggleCmd(el) { el.classList.toggle('active'); }
+        function addNewCommand() {
+            const val = document.getElementById('new-cmd-input').value;
+            if(!val) return;
+            const container = document.getElementById('trainer-cmd-list');
+            const div = document.createElement('div');
+            div.className = "cmd-item";
+            div.onclick = function() { this.classList.toggle('active'); };
+            div.innerHTML = `<span class="font-bold text-slate-800">${val}</span><input type="text" placeholder="Note for ${val}..." class="cmd-note-input" onclick="event.stopPropagation()">`;
+            container.appendChild(div);
+            document.getElementById('new-cmd-input').value = '';
+        }
 
         async function handleLogin(role) {
             const pass = prompt(`Enter ${role} password:`);
             const correct = (role === 'client') ? 'doggy' : 'trainer123';
-            if (pass !== correct) return alert("Access Denied");
-
-            document.getElementById('public-section').classList.add('section-hidden');
-            if (role === 'client') {
-                document.getElementById('portal-section').classList.remove('section-hidden');
-                loadReports();
-            } else {
-                document.getElementById('admin-section').classList.remove('section-hidden');
-            }
+            if (pass === correct) {
+                document.getElementById('public-section').classList.add('section-hidden');
+                if (role === 'client') {
+                    document.getElementById('portal-section').classList.remove('section-hidden');
+                    loadReports();
+                } else {
+                    document.getElementById('admin-section').classList.remove('section-hidden');
+                }
+            } else if (pass) { alert("Invalid password."); }
         }
 
         async function loadReports() {
             const container = document.getElementById('dog-list-container');
             const { data, error } = await sb.from('dogs').select('*').order('created_at', { ascending: false });
+            if (error) { container.innerHTML = `<p class="text-center text-red-400">Error connecting to cloud.</p>`; return; }
             
-            if (error) { container.innerHTML = "Error loading reports."; return; }
-            
-            container.innerHTML = data.map(dog => `
-                <div class="dog-card">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-2xl font-black">${dog.name}</h2>
-                        <button onclick="window.print()" class="text-[10px] font-bold bg-slate-100 px-3 py-1 rounded-lg no-print">PRINT REPORT</button>
-                    </div>
-                    <div class="mb-4">
-                        <p class="text-[10px] font-bold text-blue-600 uppercase mb-2">Commands Work:</p>
-                        <div class="flex flex-wrap gap-2">
-                            ${dog.commands.split(',').map(c => `<span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">${c}</span>`).join('')}
+            container.innerHTML = data.map(dog => {
+                const cmdItems = dog.commands ? dog.commands.split('||').map(c => {
+                    const parts = c.split(':');
+                    return `<div class="bg-blue-50 p-3 rounded-xl mb-2 border border-blue-100"><b class="text-blue-800 text-xs uppercase">${parts[0]}</b><p class="text-sm text-slate-600">${parts[1] || 'Successfully practiced.'}</p></div>`;
+                }).join('') : '';
+
+                return `
+                <div class="dog-card shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h2 class="text-2xl font-black text-slate-800">${dog.name}</h2>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${new Date(dog.created_at).toLocaleDateString()}</p>
                         </div>
+                        <button onclick="window.print()" class="no-print bg-slate-100 p-2 rounded-lg text-[10px] font-bold text-slate-500">PRINT</button>
                     </div>
-                    <div class="border-t pt-4">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">Trainer Notes:</p>
-                        <p class="text-sm leading-relaxed">${dog.notes}</p>
+                    <div class="space-y-1">${cmdItems}</div>
+                    <div class="mt-4 pt-4 border-t border-dashed">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">Final Summary</p>
+                        <p class="text-sm italic text-slate-700 leading-relaxed">"${dog.notes || 'Great session today!'}"</p>
                     </div>
-                </div>
-            `).join('');
+                    <button onclick="deleteRecord('${dog.id}')" class="no-print mt-4 text-[9px] text-red-300 font-bold uppercase tracking-widest hover:text-red-500">Remove Entry</button>
+                </div>`;
+            }).join('');
+        }
+
+        async function deleteRecord(id) {
+            if(!confirm("Permanently delete this report?")) return;
+            await sb.from('dogs').delete().eq('id', id);
+            loadReports();
         }
 
         async function saveDogData() {
             const name = document.getElementById('in-name').value;
             const notes = document.getElementById('in-notes').value;
-            const selected = Array.from(document.querySelectorAll('.cmd-btn.active')).map(btn => btn.innerText);
-            
-            if (!name) return alert("Please enter dog name");
+            const activeCmds = document.querySelectorAll('.cmd-item.active');
+            if(!name) return alert("Enter dog name");
 
-            const { error } = await sb.from('dogs').insert([{ name, notes, commands: selected.join(',') }]);
+            let cmdArray = [];
+            activeCmds.forEach(el => {
+                const cName = el.querySelector('span').innerText;
+                const cNote = el.querySelector('input').value;
+                cmdArray.push(`${cName}:${cNote}`);
+            });
+
+            const { error } = await sb.from('dogs').insert([{ name, notes, commands: cmdArray.join('||') }]);
             if (error) alert(error.message);
-            else { alert("Report Saved!"); location.reload(); }
+            else { alert("Report Saved Successfully!"); location.reload(); }
         }
 
         async function updateFact() {
-            const fact = document.getElementById('in-fact').value;
-            const { error } = await sb.from('settings').upsert({ key: 'dog_fact', value: fact });
-            if (error) alert(error.message);
-            else alert("Fact Updated!");
+            const val = document.getElementById('in-fact').value;
+            if(!val) return;
+            const { error } = await sb.from('settings').upsert({ key: 'dog_fact', value: val });
+            if (error) alert("Error updating fact");
+            else alert("Fact updated on Home Page!");
         }
     </script>
 </body>
